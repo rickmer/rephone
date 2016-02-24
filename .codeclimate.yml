@@ -1,3 +1,9 @@
+engines:
+  radon:
+    enabled: true
+  pep8:
+    enabled: true
+
 exclude_paths:
-- app/static/bootstrap/*
-- app/static/jquery/*
+  - app/static/bootstrap/*
+  - app/static/jquery/*

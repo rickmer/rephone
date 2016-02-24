@@ -4,6 +4,7 @@ rephone
 Free telephone call/callback system.
 
 [![Build Status](https://travis-ci.org/rickmer/rephone.svg?branch=master)](https://travis-ci.org/rickmer/rephone)
+[![Code Climate](https://codeclimate.com/github/rickmer/rephone/badges/gpa.svg)](https://codeclimate.com/github/rickmer/rephone)
 
 ## Project description
 We believe in the power of the people and want to contribute that their voices are being heard by decision-makers. Therefore we create an open platform for activists to start calling campaigns to address problems and issues and ask the persons responsible for change.
