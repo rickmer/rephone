@@ -1,0 +1,3 @@
+exclude_paths:
+- app/static/bootstrap/*
+- app/static/jquery/*
