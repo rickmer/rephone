@@ -4,15 +4,15 @@
             <div class="jumbotron">
                 <div class="media-object">
                     <div class="media-left">
-                        <img style="border: solid 1px;" src="{{ url_for('static', filename='examples/wolfgang.schaeuble.jpg') }}">
+                        <img style="border: solid 1px;" src="{{ url_for('static', filename='examples/'+ record.image) }}">
                     </div>
                     <div class="media-body">
-                        <h4 class="media-heading">Dr. Wolfgang Schäuble</h4>
+                        <h4 class="media-heading">{{ record.name }}</h4>
                         <ul style="list-style: none;">
-                            <li><span class="glyphicon glyphicon-flag"> CDU/CSU-Fraktion</span></li>
-                            <li><span class="glyphicon glyphicon-phone-alt"> 03022772600</span></li>
-                            <li><span class="glyphicon glyphicon-link"> <a href="http://www.wolfgang-schaeuble.de">http://www.wolfgang-schaeuble.de</a></span></li>
-                            <li><span class="glyphicon glyphicon-envelope"> <a href="mailto:wolfgang.schaeuble@bundestag.de">wolfgang.schaeuble@bundestag.de</a></span></li>
+                            <li><span class="glyphicon glyphicon-flag"> {{ record.fraktion }}</span></li>
+                            <li><span class="glyphicon glyphicon-phone-alt"> {{ record.telefon_nr }}</span></li>
+                            <li><span class="glyphicon glyphicon-link"> <a href="{{ record.url }}">{{ record.url }}</a></span></li>
+                            <li><span class="glyphicon glyphicon-envelope"> <a href="mailto:{{ record.email }}">{{ record.email }}</a></span></li>
                         </ul>
                         <p>
                             <div class="input-group">
