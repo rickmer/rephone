@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+	{% block content %}
+        <div class="row">
+            <div class="jumbotron">
+                <div class="media-object">
+                    <div class="media-left">
+                        <img style="border: solid 1px;" src="{{ url_for('static', filename='examples/wolfgang.schaeuble.jpg') }}">
+                    </div>
+                    <div class="media-body">
+                        <h4 class="media-heading">Dr. Wolfgang Schäuble</h4>
+                        <ul style="list-style: none;">
+                            <li><span class="glyphicon glyphicon-flag"> CDU/CSU-Fraktion</span></li>
+                            <li><span class="glyphicon glyphicon-phone-alt"> 03022772600</span></li>
+                            <li><span class="glyphicon glyphicon-link"> <a href="http://www.wolfgang-schaeuble.de">http://www.wolfgang-schaeuble.de</a></span></li>
+                            <li><span class="glyphicon glyphicon-envelope"> <a href="mailto:wolfgang.schaeuble@bundestag.de">wolfgang.schaeuble@bundestag.de</a></span></li>
+                        </ul>
+                        <p>
+                            <div class="input-group">
+                                <span class="input-group-addon"><div class="glyphicon glyphicon-earphone"></div></span>
+                                <input class="form-control" placeholder="+49 160 12345678">
+                            </div>
+                        </p>
+                        <p>
+                            <button class="btn btn-primary">Anrufen!</button>
+                            <button class="btn btn-info">jemand anderen anrufen ...</button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
