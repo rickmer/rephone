@@ -1,1 +1,24 @@
-<h1>Hello World</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}">
+    <script src="{{ url_for('static', filename='jquery/jquery-2.1.4.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <nav class="navbar, navbar-default">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a href='/' class="navbar-brand">Call den Bundestag</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+</html>
