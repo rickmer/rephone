@@ -4,6 +4,10 @@ engines:
   pep8:
     enabled: true
 
+ratings:
+  paths:
+    - "**.py"
+
 exclude_paths:
   - app/static/bootstrap/*
   - app/static/jquery/*
