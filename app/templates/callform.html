@@ -4,25 +4,25 @@
             <div class="jumbotron">
                 <div class="media-object">
                     <div class="media-left">
-                        <img style="border: solid 1px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
+                        <img class="img-thumbnail" style="max-width: 300px; max-height: 300px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">{{ record.name }}</h4>
                         <ul style="list-style: none;">
                             <li><span class="glyphicon glyphicon-flag"> {{ record.fraktion }}</span></li>
                             <li><span class="glyphicon glyphicon-phone-alt"> {{ record.telefon_nr }}</span></li>
-                            <li><span class="glyphicon glyphicon-link"> <a href="{{ record.url }}">{{ record.url }}</a></span></li>
+                            <li><span class="glyphicon glyphicon-link"> <a href="{{ record.url }}" target="_blank">{{ record.url }}</a></span></li>
                             <li><span class="glyphicon glyphicon-envelope"> <a href="mailto:{{ record.email }}">{{ record.email }}</a></span></li>
                         </ul>
                         <p>
                             <div class="input-group">
                                 <span class="input-group-addon"><div class="glyphicon glyphicon-earphone"></div></span>
-                                <input class="form-control" placeholder="+49 160 12345678">
+                                <input class="form-control" placeholder="+49 160 12345678 - gib hier deine Telefonnummer ein wir verbinden Dich. Kostenfrei.">
                             </div>
                         </p>
                         <p>
                             <button class="btn btn-primary">Anrufen!</button>
-                            <button class="btn btn-info">jemand anderen anrufen ...</button>
+                            <a href="/" class="btn btn-info">jemand anderen anrufen ...</a>
                         </p>
                     </div>
                 </div>
