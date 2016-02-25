@@ -29,13 +29,13 @@ def make_call(request):
             try:
                 twilio_client.calls.create(from_=current_app.config['TWILIO_CALLER_ID'],
                                            to=tel_caller,
-                                           url=url_for('.outbound', _external=True))
+                                           url=url_for('.outbound', _external=True, _scheme='https'))
             except Exception as e:
                 current_app.logger.error(e)
                 flash('something went wrong', category='warning')
                 return render_template('callform.html', record=record, form=form)
 
-            flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb + str(url_for('.outbound', _external=True)), category='info')
+            flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb, category='info')
             return render_template('callform.html', record=record, form=form)
         else:
             flash('Something went wrong', category='warning')
