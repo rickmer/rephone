@@ -14,16 +14,20 @@
                             <li><span class="glyphicon glyphicon-link"> <a href="{{ record.url }}" target="_blank">{{ record.url }}</a></span></li>
                             <li><span class="glyphicon glyphicon-envelope"> <a href="mailto:{{ record.email }}">{{ record.email }}</a></span></li>
                         </ul>
-                        <p>
-                            <div class="input-group">
-                                <span class="input-group-addon"><div class="glyphicon glyphicon-earphone"></div></span>
-                                <input class="form-control" placeholder="+49 160 12345678 - gib hier deine Telefonnummer ein wir verbinden Dich. Kostenfrei.">
-                            </div>
-                        </p>
-                        <p>
-                            <button class="btn btn-primary">Anrufen!</button>
-                            <a href="/" class="btn btn-info">jemand anderen anrufen ...</a>
-                        </p>
+                        <form id="CallForm" class="form" method="POST" role="form" action="/call">
+                            {{ form.hidden_tag() }}
+                            <input type="hidden" name="{{ form.id_mdb.name }}" id="{{ form.id_mdb.name }}" value="{{ record.id }}">
+                            <p>
+                                <div class="input-group {% if form.phone_number.errors %} has-error {% endif %}">
+                                    <span class="input-group-addon"><div class="glyphicon glyphicon-earphone"></div></span>
+                                    <input id="{{ form.phone_number.name }}" name="{{ form.phone_number.name }}" class="form-control" placeholder="+49 160 12345678 - gib hier deine Telefonnummer ein wir verbinden Dich. Kostenfrei." value="{% if form.phone_number.data %} {{ form.phone_number.data }} {% endif %}">
+                                </div>
+                            </p>
+                            <p>
+                                <button id="CallButton" class="btn btn-primary">Anrufen!</button>
+                                <a href="/" class="btn btn-info">jemand anderen anrufen ...</a>
+                            </p>
+                        </form>
                     </div>
                 </div>
             </div>

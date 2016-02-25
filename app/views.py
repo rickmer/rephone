@@ -1,11 +1,18 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, request
+from .calls import make_call, dispatch
 main = Blueprint('main', __name__)
 
 
 @main.route('/', methods=['GET'])
 def index():
-    from .models import MitgliedDesBundestages
-    from random import randint
-    random_id = randint(1, 631)
-    record = MitgliedDesBundestages().query.filter_by(id=random_id).first()
-    return render_template('callform.html', record=record)
+    return make_call(request)
+
+
+@main.route('/call', methods=['POST'])
+def call():
+    return make_call(request)
+
+
+@main.route('/dispatch', methods=['POST'])
+def dispatch():
+    return dispatch()
