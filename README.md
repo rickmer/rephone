@@ -8,13 +8,15 @@ Free telephone call/callback system.
 
 ## Project description
 We believe in the power of the people and want to contribute that their voices are being heard by decision-makers. Therefore we create an open platform for activists to start calling campaigns to address problems and issues and ask the persons responsible for change.
-## Installation
 
+## Installation
+```
 make install
 
 run.py
+```
 
-Test web server on your favorite browser: http://localhost:5000
+Test web server on your favorite browser: http://localhost:5001
 
 
 ## Status and contribution
