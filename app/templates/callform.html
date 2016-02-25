@@ -14,7 +14,7 @@
                             <li><span class="glyphicon glyphicon-link"> <a href="{{ record.url }}" target="_blank">{{ record.url }}</a></span></li>
                             <li><span class="glyphicon glyphicon-envelope"> <a href="mailto:{{ record.email }}">{{ record.email }}</a></span></li>
                         </ul>
-                        <form id="CallForm" class="form" method="POST" role="form" action="/call">
+                        <form id="CallForm" class="form" method="POST" role="form" action="/">
                             {{ form.hidden_tag() }}
                             <input type="hidden" name="{{ form.id_mdb.name }}" id="{{ form.id_mdb.name }}" value="{{ record.id }}">
                             <p>

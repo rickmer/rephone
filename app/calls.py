@@ -35,7 +35,7 @@ def make_call(request):
                 flash('something went wrong', category='warning')
                 return render_template('callform.html', record=record, form=form)
 
-            flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb + str(url_for('.dispatch', _external=True)), category='info')
+            flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb + str(url_for('.outbound', _external=True)), category='info')
             return render_template('callform.html', record=record, form=form)
         else:
             flash('Something went wrong', category='warning')
@@ -43,19 +43,13 @@ def make_call(request):
             return render_template('callform.html', record=record, form=form)
 
 
-def dispatch():
+def make_outbound_call():
     response = twiml.Response()
 
     response.say("Hallo! Wir verbinden Dich jetzt. Danke für Deine Zeit.",
                  voice='alice',
                  language='de')
     response.hangup()
-    '''
-    # Uncomment this code and replace the number with the number you want
-    # your customers to call.
-    with response.dial() as dial:
-        dial.number("+16518675309")
-    '''
     return str(response)
 
 
