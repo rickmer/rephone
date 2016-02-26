@@ -8,6 +8,16 @@ Seid ihr die Erfinder dieser Protestform?
 Nein, schon vor uns wurde zu Protestanrufen aufgerufen. Beispielsweise das Pi-Phone von "la quadrature du Net" gab es zu diesen Zwecke bereits vor uns. Aber auch die Bild-Zeitung hat sich dieser Methode bereits mehrfach bedient.
 
 Wollt ihr den angerufenen Personen/Organisationen schaden?
-Wir wollen einen positiven Wandel bewirken und dazu beitragen Missstände zu beseitigen und auf Fehlverhalten hinweisen. Im Rahmen von Kampagnen können Personen/Organisationen einen Imageschaden erleiden oder Gewinnausfälle verzeichnen, weil sie nicht ihrer 'normalen' Tätigkeit nachgehen. Wir sind bestrebt die negativen Auswirkungen zu minimieren und für Hinweise zur Verbesserung unserer Strategie dankbar.
+Wir wollen einen positiven Wandel bewirken und dazu beitragen Missstände zu beseitigen und auf Fehlverhalten hinweisen. Im Rahmen von Kampagnen können Personen/Organisationen einen Imageschaden erleiden oder Gewinnausfälle verzeichnen, weil sie nicht ihrer 'normalen' Tätigkeit nachgehen. Wir sind bestrebt die negativen Auswirkungen zu minimieren. Beispielsweise kann keine Telefonnummer öfter als 20 Mal pro Tag von unserem System angerufen werden. Somit wollen wir den gegenseitigen Respekt wahren und die Möglichkeit eines Denail-of-Service-Angriffs ausschließen. Für Hinweise zur Verbesserung unserer Strategie sind wir dankbar.
+
+Wie kann ich euch unterstützen?
+Am einfachsten kannst du uns helfen, indem du mit deinen Freunden und Bekannten über dieses Projekt sprichst. Ebenso hilfreich ist es für uns ein Feedback von dir zu erhalten, sodass wir von die lernen können. Darüber hinaus haben wir viele Ideen wo wir deine helfenden Hände gebrauchen können und freuen uns von dir zu hören. Beispielsweise suchen wir noch Unterstützung in den Bereichen Softwareentwicklung,  Strategieentwicklung, Durchführung von Kampagnen, Öffentlichkeitsarbeit und Finanzierung. Am besten nimmst du einfach per E-Mail mit uns Kontakt auf.
+
+Werdet ihr für eure Arbeit bezahlt?
+Nein, wir arbeiten ehrenamtlich an diesem Projekt.
+
+Steht ihr einer Partei nahe?
+Nein, mit unserem Handeln folgen wir unseren Hoffnungen und Visionen und keinem Parteibuch. Mit diesem Projekt wollen wir insbesondere aufzeigen, dass sich politisches Engagement ausserhalb von Parteien lohnt, weil wir viel mehr Gutes bewegen können ohne die üblichen Normen und Zwänge der Politik.  
+
 
 
