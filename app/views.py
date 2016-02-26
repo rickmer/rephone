@@ -8,6 +8,6 @@ def index():
     return make_call(request)
 
 
-@main.route('/outbound', methods=['GET'])
-def outbound():
-    return make_outbound_call()
+@main.route('/outbound/<record_id>', methods=['GET'])
+def outbound(record_id):
+    return make_outbound_call(record_id)

@@ -17,6 +17,7 @@ def make_call(request):
             record = MitgliedDesBundestages().query.filter_by(id=form.id_mdb.data).first()
             tel_mdb = record.telefon_nr
             tel_caller = form.phone_number.data
+            callback_uri = '/'.join([url_for('.outbound', _external=True, _scheme='https'), str(record.id)])
 
             try:
                 twilio_client = TwilioRestClient(current_app.config['TWILIO_ACCOUNT_SID'],
@@ -29,7 +30,8 @@ def make_call(request):
             try:
                 twilio_client.calls.create(from_=current_app.config['TWILIO_CALLER_ID'],
                                            to=tel_caller,
-                                           url=url_for('.outbound', _external=True, _scheme='https'))
+                                           url=callback_uri,
+                                           method='GET')
             except Exception as e:
                 current_app.logger.error(e)
                 flash('something went wrong', category='warning')
@@ -43,7 +45,7 @@ def make_call(request):
             return render_template('callform.html', record=record, form=form)
 
 
-def make_outbound_call():
+def make_outbound_call(record_id):
     response = twiml.Response()
 
     response.say("Hallo! Wir verbinden Dich jetzt. Danke für Deine Zeit.",
