@@ -16,6 +16,6 @@ class CallForm(Form):
         if not initial_validation:
             return False
         if not PhoneNumber(self.phone_number).is_from(49):
-            self.phone_number.errors.append('Keine deutsche Rufnummer.')
+            self.phone_number.errors.append('Dies ist keine deutsche Rufnummer.')
             return False
         return True
