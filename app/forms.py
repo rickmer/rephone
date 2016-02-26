@@ -11,7 +11,11 @@ class CallForm(Form):
         super(CallForm, self).__init__(*args, **kwargs)
 
     def validate(self):
+        from .phone_number import PhoneNumber
         initial_validation = super(CallForm, self).validate()
         if not initial_validation:
+            return False
+        if not PhoneNumber(self.phone_number).is_from(49):
+            self.phone_number.errors.append('Keine deutsche Rufnummer.')
             return False
         return True
