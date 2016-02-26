@@ -9,10 +9,22 @@
                     <div class="media-body">
                         <h4 class="media-heading">{{ record.name }}</h4>
                         <ul style="list-style: none;">
-                            <li><span class="glyphicon glyphicon-flag"> {{ record.fraktion }}</span></li>
-                            <li><span class="glyphicon glyphicon-phone-alt"> {{ record.telefon_nr }}</span></li>
-                            <li><span class="glyphicon glyphicon-link"> <a href="{{ record.url }}" target="_blank">{{ record.url }}</a></span></li>
-                            <li><span class="glyphicon glyphicon-envelope"> <a href="mailto:{{ record.email }}">{{ record.email }}</a></span></li>
+                            <li>
+                                <span class="glyphicon glyphicon-flag"></span>
+                                <span>{{ record.fraktion }}</span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-phone-alt"></span>
+                                <span>{{ record.telefon_nr }}</span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-link"></span>
+                                <span><a href="{{ record.url }}" target="_blank">{{ record.url }}</a></span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-envelope"></span>
+                                <span><a href="mailto:{{ record.email }}">{{ record.email }}</a></span>
+                            </li>
                         </ul>
                         <form id="CallForm" class="form" method="POST" role="form" action="/">
                             {{ form.hidden_tag() }}
