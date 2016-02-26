@@ -45,12 +45,21 @@ def make_call(request):
 
 
 def make_outbound_call(record_id):
+
     response = twiml.Response()
+
+    record = MitgliedDesBundestages().query.filter_by(id=record_id).first()
+    if record is None:
+        response.hangup()
+        return str(response)
 
     response.say("Hallo! Wir verbinden Dich jetzt. Danke für Deine Zeit.",
                  voice='alice',
                  language='de')
-    response.hangup()
+
+    with response.dial() as dial:
+        dial.number(record.telefon_nr)
+
     return str(response)
 
 
