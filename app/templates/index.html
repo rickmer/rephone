@@ -7,17 +7,8 @@
     <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
 </head>
 <body>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-            <div>
-                {% for category, message in messages %}
-                    <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    {% endwith %}
     <div class="container col-lg-10 col-lg-offset-1">
-        <div class="row">
+        <div class="row" style="padding-top: 10px;">
             <nav class="navbar navbar-default">
                 <div class="container-fluid">
                     <div class="navbar-header">
@@ -33,6 +24,15 @@
                 </div>
             </nav>
         </div>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div>
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
         {% block content %}
         {% endblock %}
     </div>

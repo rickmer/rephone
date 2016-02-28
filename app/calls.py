@@ -39,10 +39,6 @@ def make_call(request):
             flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb, category='info')
             return render_template('callform.html', record=record, form=form)
         else:
-            if form.phone_number.errors:
-                flash(form.phone_number.errors[0], category='warning')
-            else:
-                flash('Something went wrong', category='warning')
             record = MitgliedDesBundestages().query.filter_by(id=form.id_mdb.data).first()
             return render_template('callform.html', record=record, form=form)
 

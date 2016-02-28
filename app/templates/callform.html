@@ -32,7 +32,7 @@
                             <p>
                                 <div class="input-group {% if form.phone_number.errors %} has-error {% endif %}">
                                     <span class="input-group-addon"><div class="glyphicon glyphicon-earphone"></div></span>
-                                    <input id="{{ form.phone_number.name }}" name="{{ form.phone_number.name }}" class="form-control" placeholder="+49 160 12345678 - gib hier deine Telefonnummer ein. Wir verbinden Dich. Kostenfrei." value="{% if form.phone_number.data %} {{ form.phone_number.data }} {% endif %}">
+                                    <input id="{{ form.phone_number.name }}" name="{{ form.phone_number.name }}" class="form-control" placeholder="{% if form.phone_number.errors %} {% for error in form.phone_number.errors %} {{ error }} {% endfor %} {% else %} +49 30 12345678 - gib hier deine Telefonnummer ein. Wir verbinden Dich. Kostenfrei. {% endif %}" value="{% if form.phone_number.data %} {{ form.phone_number.data }} {% endif %}">
                                 </div>
                             </p>
                             <p>

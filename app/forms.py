@@ -5,7 +5,7 @@ from wtforms.validators import DataRequired, Length
 
 class CallForm(Form):
     id_mdb = IntegerField(validators=[DataRequired()])
-    phone_number = StringField(validators=[DataRequired(), Length(1, 64)])
+    phone_number = StringField(validators=[DataRequired(message=u'Dieses Feld ist erforderlich.'), Length(1, 64)])
 
     def __init__(self, *args, **kwargs):
         super(CallForm, self).__init__(*args, **kwargs)
