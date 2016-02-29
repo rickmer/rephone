@@ -1,4 +1,4 @@
-from flask import render_template, flash, url_for, current_app
+from flask import render_template, flash, url_for, current_app, abort
 from .models import MitgliedDesBundestages
 from .forms import CallForm
 from twilio import twiml
@@ -49,8 +49,7 @@ def make_outbound_call(record_id):
 
     record = MitgliedDesBundestages().query.filter_by(id=record_id).first()
     if record is None:
-        response.hangup()
-        return str(response)
+        return abort(404)
 
     response.say("Hallo! Wir verbinden Dich jetzt. Danke für Deine Zeit.",
                  voice='alice',
