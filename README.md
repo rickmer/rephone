@@ -13,6 +13,8 @@ We believe in the power of the people and want to contribute that their voices a
 ```
 make install
 
+source bin/activate
+
 run.py
 ```
 
