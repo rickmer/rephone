@@ -13,11 +13,6 @@ def campaign(id_campaign):
     return make_call(request, id_campaign)
 
 
-@main.route('/<id_campaign>/<respondent_number>')
-def campaign_respondent(id_campaign, respondent_number):
-    return make_call(request, id_campaign, respondent_number)
-
-
 @main.route('/outbound/<record_id>', methods=['POST'])
 def outbound(record_id):
     return make_outbound_call(record_id)
