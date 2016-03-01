@@ -26,7 +26,7 @@
                                 <span><a href="mailto:{{ record.email }}">{{ record.email }}</a></span>
                             </li>
                         </ul>
-                        <form id="CallForm" class="form" method="POST" role="form" action="/">
+                        <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign }}">
                             {{ form.hidden_tag() }}
                             <input type="hidden" name="{{ form.id_mdb.name }}" id="{{ form.id_mdb.name }}" value="{{ record.id }}">
                             <p>

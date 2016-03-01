@@ -8,7 +8,7 @@ def index():
     return make_call(request)
 
 
-@main.route('/<id_campaign>')
+@main.route('/<id_campaign>', methods=['GET', 'POST'])
 def campaign(id_campaign):
     return make_call(request, id_campaign)
 

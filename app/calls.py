@@ -1,10 +1,9 @@
 from flask import render_template, flash, url_for, current_app, abort
-from .models import Respondent
+from .models import Respondent, Campaign, Audience
 from .forms import CallForm
 from twilio import twiml
 from twilio.rest import TwilioRestClient
 from random import randint
-from .models import Campaign, Audience
 from operator import attrgetter
 
 
