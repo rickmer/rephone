@@ -10,10 +10,10 @@ from operator import attrgetter
 
 def make_call(request, id_campaign=1):
     form = CallForm(request.form)
+    campaign = Campaign().query.filter_by(id=id_campaign).first()
+    if campaign is None:
+        return abort(404)
     if request.method == 'GET':
-        campaign = Campaign().query.filter_by(id=id_campaign).first()
-        if campaign is None:
-            return abort(404)
         audience = Audience().query.filter_by(id=campaign.id_audience).first()
         random_id = randint(1, 631)
         record = sorted(audience.respondents, key=attrgetter('id'))[random_id]
@@ -23,30 +23,15 @@ def make_call(request, id_campaign=1):
             record = Respondent().query.filter_by(id=form.id_mdb.data).first()
             tel_mdb = record.telefon_nr
             tel_caller = form.phone_number.data
-            callback_uri = url_for('.outbound', _external=True, _scheme='https', record_id=str(record.id))
-            try:
-                twilio_client = TwilioRestClient(current_app.config['TWILIO_ACCOUNT_SID'],
-                                                 current_app.config['TWILIO_AUTH_TOKEN'])
-            except Exception as e:
-                current_app.logger.error(e)
+            if not initiate_call(record_id=form.id_mdb.data, tel_caller=tel_caller):
                 flash('something went wrong', category='warning')
-                return render_template('callform.html', record=record, form=form)
-
-            try:
-                twilio_client.calls.create(from_=current_app.config['TWILIO_CALLER_ID'],
-                                           to=tel_caller,
-                                           url=callback_uri,
-                                           method='POST')
-            except Exception as e:
-                current_app.logger.error(e)
-                flash('something went wrong', category='warning')
-                return render_template('callform.html', record=record, form=form)
-
-            flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb, category='info')
-            return render_template('callform.html', record=record, form=form)
+                return render_template('callform.html', record=record, form=form, campaign=id_campaign)
+            else:
+                flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb, category='info')
+                return render_template('callform.html', record=record, form=form, campaign=id_campaign)
         else:
             record = Respondent().query.filter_by(id=form.id_mdb.data).first()
-            return render_template('callform.html', record=record, form=form)
+            return render_template('callform.html', record=record, form=form, campaign=id_campaign)
 
 
 def make_outbound_call(record_id):
@@ -67,3 +52,21 @@ def make_outbound_call(record_id):
     return str(response)
 
 
+def initiate_call(record_id, tel_caller):
+    callback_uri = url_for('.outbound', _external=True, _scheme='https', record_id=str(record_id))
+    try:
+        twilio_client = TwilioRestClient(current_app.config['TWILIO_ACCOUNT_SID'],
+                                         current_app.config['TWILIO_AUTH_TOKEN'])
+    except Exception as e:
+        current_app.logger.error(e)
+        return False
+
+    try:
+        twilio_client.calls.create(from_=current_app.config['TWILIO_CALLER_ID'],
+                                   to=tel_caller,
+                                   url=callback_uri,
+                                   method='POST')
+    except Exception as e:
+        current_app.logger.error(e)
+        return False
+    return True
