@@ -14,7 +14,7 @@ def make_call(request, id_campaign=1):
         return abort(404)
     if request.method == 'GET':
         audience = Audience().query.filter_by(id=campaign.id_audience).first()
-        random_id = randint(1, 751)
+        random_id = randint(0, 750)
         record = sorted(audience.respondents, key=attrgetter('id'))[random_id]
         return render_template('callform.html', record=record, form=form, campaign=id_campaign)
     elif request.method == 'POST':
