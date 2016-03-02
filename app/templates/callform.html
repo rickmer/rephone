@@ -5,17 +5,26 @@
                 <div class="media-object">
                     <div class="media-left">
                         <img class="img-thumbnail" style="max-width: 300px; max-height: 300px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
+                        <div class="small">{{ record.license}}</div>
                     </div>
                     <div class="media-body">
                         <h4 class="media-heading">{{ record.name }}</h4>
                         <ul style="list-style: none;">
                             <li>
                                 <span class="glyphicon glyphicon-flag"></span>
-                                <span>{{ record.institution }}</span>
+                                <span>{{ record.nation }}</span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-list-alt"></span>
+                                <span>{{ record.party }}</span>
                             </li>
                             <li>
                                 <span class="glyphicon glyphicon-phone-alt"></span>
-                                <span>{{ record.telefon_nr }}</span>
+                                <span>{{ record.phone }}</span>
+                            </li>
+                            <li>
+                                <span class="glyphicon glyphicon-tags"></span>
+                                <span>{{ record.group }}</span>
                             </li>
                             <li>
                                 <span class="glyphicon glyphicon-link"></span>

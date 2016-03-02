@@ -14,13 +14,13 @@ def make_call(request, id_campaign=1):
         return abort(404)
     if request.method == 'GET':
         audience = Audience().query.filter_by(id=campaign.id_audience).first()
-        random_id = randint(1, 631)
+        random_id = randint(1, 751)
         record = sorted(audience.respondents, key=attrgetter('id'))[random_id]
         return render_template('callform.html', record=record, form=form, campaign=id_campaign)
     elif request.method == 'POST':
         if form.validate_on_submit():
             record = Respondent().query.filter_by(id=form.id_mdb.data).first()
-            tel_mdb = record.telefon_nr
+            tel_mdb = record.phone
             tel_caller = form.phone_number.data
             if not initiate_call(record_id=form.id_mdb.data, tel_caller=tel_caller):
                 flash('something went wrong', category='warning')
