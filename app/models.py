@@ -8,11 +8,16 @@ audience_respondent = db.Table('audience_respondent',
 class Respondent(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(128))
-    institution = db.Column(db.String(64))
-    telefon_nr = db.Column(db.String(32))
-    url = db.Column(db.String(256))
+    phone = db.Column(db.String(32))
     email = db.Column(db.String(64))
+    url = db.Column(db.String(256))
+    nation = db.Column(db.String(128))
+    group = db.Column(db.String(128))
+    party = db.Column(db.String(128))
+    license = db.Column(db.String(128))
     image = db.Column(db.String(64))
+    voting = db.Column(db.String(16))
+    confluence = db.Column(db.String(16))
 
 
 class Campaign(db.Model):
