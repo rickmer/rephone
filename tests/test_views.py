@@ -13,7 +13,7 @@ class TestViews(RephoneTest):
         with self.client:
             response = self.client.post('/outbound/1')
             assert response.status_code == 200
-            assert match(r'.*<Dial><Number>\+493022772600</Number></Dial>.*', str(response.get_data()))
+            assert match(r'.*<Dial><Number>\+32022845572</Number></Dial>.*', str(response.get_data()))
 
     def test_phone_number_validation(self):
         with self.client:

@@ -44,12 +44,12 @@ def make_outbound_call(record_id):
     response.say("Hallo! Wir verbinden Dich jetzt. Danke für Deine Zeit.",
                  voice='alice',
                  language='de')
-    
+
     if current_app.config['demo_mode']:
         response.hangup()
     else:
         with response.dial() as dial:
-            dial.number(record.telefon_nr)
+            dial.number(record.phone)
 
     return str(response)
 
