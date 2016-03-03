@@ -7,16 +7,20 @@ from random import randint
 from operator import attrgetter
 
 
-def make_call(request, id_campaign=1):
+def make_call(request, id_campaign=1, embedded=False):
     form = CallForm(request.form)
     campaign = Campaign().query.filter_by(id=id_campaign).first()
     if campaign is None:
         return abort(404)
+    if embedded:
+        template = 'callform_embedded.html'
+    else:
+        template = 'callform.html'
     if request.method == 'GET':
         audience = Audience().query.filter_by(id=campaign.id_audience).first()
         random_id = randint(0, 750)
         record = sorted(audience.respondents, key=attrgetter('id'))[random_id]
-        return render_template('callform.html', record=record, form=form, campaign=id_campaign)
+        return render_template(template, record=record, form=form, campaign=id_campaign)
     elif request.method == 'POST':
         if form.validate_on_submit():
             record = Respondent().query.filter_by(id=form.id_mdb.data).first()
@@ -24,13 +28,13 @@ def make_call(request, id_campaign=1):
             tel_caller = form.phone_number.data
             if not initiate_call(record_id=form.id_mdb.data, tel_caller=tel_caller):
                 flash('something went wrong', category='warning')
-                return render_template('callform.html', record=record, form=form, campaign=id_campaign)
+                return render_template(template, record=record, form=form, campaign=id_campaign)
             else:
                 flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb, category='info')
-                return render_template('callform.html', record=record, form=form, campaign=id_campaign)
+                return render_template(template, record=record, form=form, campaign=id_campaign)
         else:
             record = Respondent().query.filter_by(id=form.id_mdb.data).first()
-            return render_template('callform.html', record=record, form=form, campaign=id_campaign)
+            return render_template(template, record=record, form=form, campaign=id_campaign)
 
 
 def make_outbound_call(record_id):
