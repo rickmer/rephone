@@ -5,8 +5,11 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}">
         <script src="{{ url_for('static', filename='jquery/jquery-2.1.4.min.js') }}"></script>
         <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/captcha.js') }}"></script>
+        <script type="application/javascript">$(document).ready(function () {refresh_captcha();})</script>
     </head>
     <body>
+        {% from "captcha.html" import render_captcha %}
         <div class="row">
             <div class="well well-lg">
                 <div class="media-object visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
@@ -55,6 +58,7 @@
                                 <button id="CallButton" class="btn btn-primary">Anrufen!</button>
                                 <a href="/embedded/{{ campaign }}" class="btn btn-info">jemand anderen anrufen ...</a>
                             </p>
+                            {{ render_captcha(form) }}
                         </form>
                     </div>
                 </div>
@@ -99,6 +103,7 @@
                         </p>
                         <button id="CallButton" class="btn btn-primary btn-block">Anrufen!</button>
                         <a href="/{{ campaign }}" class="btn btn-info btn-block">jemand anderen anrufen ...</a>
+                        {{ render_captcha(form) }}
                     </form>
                 </div>
                 <a href="/{{ campaign }}" class="pull-right" style="margin-top: -20px;" target="_parent">CallForDemocracy.org</a>

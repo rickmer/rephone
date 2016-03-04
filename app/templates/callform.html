@@ -1,5 +1,6 @@
 {% extends "index.html" %}
 	{% block content %}
+        {% from "captcha.html" import render_captcha %}
         <div class="row">
             <div class="well well-lg">
                 <div class="media-object visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
@@ -48,6 +49,7 @@
                                 <button id="CallButton" class="btn btn-primary">Anrufen!</button>
                                 <a href="/{{ campaign }}" class="btn btn-info">jemand anderen anrufen ...</a>
                             </p>
+                            {{ render_captcha(form) }}
                         </form>
                     </div>
                 </div>
@@ -92,6 +94,7 @@
                         </p>
                         <button id="CallButton" class="btn btn-primary btn-block">Anrufen!</button>
                         <a href="/{{ campaign }}" class="btn btn-info btn-block">jemand anderen anrufen ...</a>
+                        {{ render_captcha(form) }}
                     </form>
                 </div>
             </div>

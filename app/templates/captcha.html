@@ -1,0 +1,19 @@
+{% macro render_captcha(form) %}
+    <input type="hidden" name="captcha_hash" id="captcha-hash" value="">
+
+    <div class="media">
+        <div class="media-left media-middle">
+            <img class="img" id="captcha-image" src="" alt="captcha">
+        </div>
+        <div class="media-body">
+            <div class="input-group {% if form.captcha.errors %} has-error {% endif %}">
+                <span class="input-group-btn" id="captcha_addon">
+                    <a class="btn btn-default" onclick="refresh_captcha();">
+                        <span class="glyphicon glyphicon-refresh"></span>
+                    </a>
+                </span>
+                <input class="form-control" type="text" id="captcha" name="captcha" aria-describedby="captcha_addon" placeholder="{% if form.captcha.errors %} {{ form.captcha.errors[0] }} {% else %} please fill captcha {% endif %}">
+            </div>
+        </div>
+    </div>
+{% endmacro %}
