@@ -8,6 +8,13 @@ from operator import attrgetter
 
 
 def make_call(request, id_campaign=1, embedded=False):
+    """
+    Render a call page.
+    :param request: a flask request object.
+    :param id_campaign: an campaign id.
+    :param embedded: True if embed template is supposed to be rendered.
+    :return: flask response.
+    """
     form = CallForm(request.form)
     campaign = Campaign().query.filter_by(id=id_campaign).first()
     if campaign is None:
@@ -38,6 +45,11 @@ def make_call(request, id_campaign=1, embedded=False):
 
 
 def make_outbound_call(record_id):
+    """
+    Twilio callback for a call to get connected to the respective respondent.
+    :param record_id: id of the respondent
+    :return: flask response (XML).
+    """
 
     response = twiml.Response()
 
@@ -59,6 +71,12 @@ def make_outbound_call(record_id):
 
 
 def initiate_call(record_id, tel_caller):
+    """
+    Dispatch a call to the user provided Phone number.
+    :param record_id: if of the respondent to finally receive the call.
+    :param tel_caller: phone number of the user
+    :return: True iff call was successfully dispatched.
+    """
     callback_uri = url_for('.outbound', _external=True, _scheme='https', record_id=str(record_id))
     try:
         twilio_client = TwilioRestClient(current_app.config['TWILIO_ACCOUNT_SID'],

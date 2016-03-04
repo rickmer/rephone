@@ -4,6 +4,9 @@ from wtforms.validators import DataRequired, Length
 
 
 class CallForm(Form):
+    """
+    WTForm to validate Phonenumber and csrf-token
+    """
     id_mdb = IntegerField(validators=[DataRequired()])
     phone_number = StringField(validators=[DataRequired(message=u'Dieses Feld ist erforderlich.'), Length(1, 64)])
 

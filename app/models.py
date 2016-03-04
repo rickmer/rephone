@@ -6,6 +6,9 @@ audience_respondent = db.Table('audience_respondent',
 
 
 class Respondent(db.Model):
+    """
+    ORM Model for the decision makers data.
+    """
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(128))
     phone = db.Column(db.String(32))
@@ -21,6 +24,9 @@ class Respondent(db.Model):
 
 
 class Campaign(db.Model):
+    """
+    ORM model for Calling Campaigns.
+    """
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(128))
     description = db.Column(db.String(1024))
@@ -28,6 +34,9 @@ class Campaign(db.Model):
 
 
 class Audience(db.Model):
+    """
+    ORM model for different groups of decision makers to be addressed by a campaign.
+    """
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(128))
     respondents = db.relationship('Respondent',
