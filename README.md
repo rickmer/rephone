@@ -11,15 +11,32 @@ We believe in the power of the people and want to contribute that their voices a
 
 ## Installation
 ```
+git clone https://github.com/rickmer/rephone.git
+
 make install
-
-source bin/activate
-
-run.py
 ```
 
+## Get Started
+```
+# activate virtual environment
+source bin/activate
+
+./run.py
+```
 Test web server on your favorite browser: http://localhost:5001
 
+## usage
+```
+usage: run.py [-h] [--debug] [--demo] [--port PORT]
+
+rephone - a free telephone call/callback system.
+
+optional arguments:
+  -h, --help   show this help message and exit
+  --debug      Run with Interactive Debugger
+  --demo       Demo Mode; Doesn't make outbound calls.
+  --port PORT  tcp port to listen to
+```
 
 ## Status and contribution
 
@@ -33,3 +50,6 @@ Additionally, there is a chat room on Gitter:
 
 ## License
 
+[![License](http://www.gnu.org/graphics/agplv3-155x51.png)](http://www.gnu.org/licenses/agpl-3.0.txt)
+
+rephone is provided under the GNU Affero General Public License version 3.
