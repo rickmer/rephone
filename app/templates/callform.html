@@ -25,7 +25,7 @@
                         <button id="CallButton" class="btn btn-primary btn-block">Anrufen!</button>
                         <a href="/{{ campaign }}" class="btn btn-info btn-block">jemand anderen anrufen ...</a>
                 </div>
-                    {{ render_captcha(form) }}
+                    {{ render_captcha(form, captcha_activated) }}
                 </div>
             </form>
         </div>

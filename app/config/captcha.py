@@ -1,3 +1,4 @@
+CAPTCHA_ACTIVATED = True
 DEBUG = False
 
 CAPTCHA_FONT_PATH = 'app/static/fonts/Vera.ttf'

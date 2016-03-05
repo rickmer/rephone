@@ -1,12 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+{% from "_macros.html" import render_head %}
     <head>
-        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}">
-        <script src="{{ url_for('static', filename='jquery/jquery-2.1.4.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-        <script src="{{ url_for('static', filename='js/captcha.js') }}"></script>
-        <script type="application/javascript">$(document).ready(function () {refresh_captcha();})</script>
+        {{ render_head(captcha_activated) }}
     </head>
     <body>
         {% from "_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group %}
@@ -35,7 +31,7 @@
                         <button id="CallButton" class="btn btn-primary btn-block">Anrufen!</button>
                         <a href="/{{ campaign }}" class="btn btn-info btn-block">jemand anderen anrufen ...</a>
                 </div>
-                    {{ render_captcha(form) }}
+                    {{ render_captcha(form, captcha_activated) }}
                 </div>
             </form>
         </div>

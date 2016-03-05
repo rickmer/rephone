@@ -1,3 +1,4 @@
+from flask import current_app
 from flask.ext.wtf import Form
 from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Length
@@ -21,7 +22,9 @@ class CallForm(Form):
         initial_validation = super(CallForm, self).validate()
         if not initial_validation:
             return False
-        if not CaptchaStore.validate(hashkey=self.captcha_hash.data, response=str(self.captcha.data).strip().lower()):
+        if current_app.config['CAPTCHA_ACTIVATED'] and \
+           not CaptchaStore.validate(hashkey=self.captcha_hash.data,
+                                     response=str(self.captcha.data).strip().lower()):
             self.captcha.errors.append('Bitte versuchen sie es erneut.')
             return False
         if not PhoneNumber(self.phone_number).is_from(49):

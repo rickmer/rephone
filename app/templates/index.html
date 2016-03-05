@@ -1,13 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+{% from "_macros.html" import render_head %}
 <head>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}">
-    <script src="{{ url_for('static', filename='jquery/jquery-2.1.4.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/captcha.js') }}"></script>
-    <script type="application/javascript">$(document).ready(function () {refresh_captcha();})</script>
-
+    {{ render_head(captcha_activated) }}
 </head>
 <body>
     <div class="container col-lg-10 col-lg-offset-1">

@@ -19,11 +19,17 @@ def create_app(config_override=None):
     # initialize database
     db.init_app(app=app)
     # initialize captcha
-    captcha = Captcha()
-    captcha.init_app(app=app)
+    if app.config['CAPTCHA_ACTIVATED']:
+        captcha = Captcha()
+        captcha.init_app(app=app)
+        app.register_blueprint(captcha_blueprint, url_prefix='/captcha')
     db.create_all(app=app)
     # register blueprints
     app.register_blueprint(main_blueprint)
-    app.register_blueprint(captcha_blueprint, url_prefix='/captcha')
+
+    @app.context_processor
+    def inject_into_jinja_templates():
+        return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'],
+                    test='test')
 
     return app

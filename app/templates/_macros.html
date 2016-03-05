@@ -1,4 +1,5 @@
-{% macro render_captcha(form) %}
+{% macro render_captcha(form, activated) %}
+{% if activated %}
 <input type="hidden" name="captcha_hash" id="captcha-hash" value="">
 
 <div class="media">
@@ -16,10 +17,10 @@
         </div>
     </div>
 </div>
+{% endif %}
 {% endmacro %}
 
 {% macro render_info_bulletin(record) %}
-
 <h4 class="media-heading">{{ record.name }}</h4>
 <ul style="list-style: none;">
     <li>
@@ -91,3 +92,14 @@
     </div>
 </p>
 {% endmacro %}
+
+{% macro render_head(captcha_activated) %}
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}">
+<script src="{{ url_for('static', filename='jquery/jquery-2.1.4.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+{% if captcha_activated %}
+<script src="{{ url_for('static', filename='js/captcha.js') }}"></script>
+<script type="application/javascript">$(document).ready(function () {refresh_captcha();})</script>
+{% endif %}
+{% endmacro%}
