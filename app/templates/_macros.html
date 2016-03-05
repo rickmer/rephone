@@ -1,0 +1,93 @@
+{% macro render_captcha(form) %}
+<input type="hidden" name="captcha_hash" id="captcha-hash" value="">
+
+<div class="media">
+    <div class="media-left media-middle">
+        <img class="img" id="captcha-image" src="" alt="captcha">
+    </div>
+    <div class="media-body">
+        <div class="input-group {% if form.captcha.errors %} has-error {% endif %}">
+            <span class="input-group-btn" id="captcha_addon">
+                <a class="btn btn-default" onclick="refresh_captcha();">
+                    <span class="glyphicon glyphicon-refresh"></span>
+                </a>
+            </span>
+            <input class="form-control" type="text" id="captcha" name="captcha" aria-describedby="captcha_addon" placeholder="{% if form.captcha.errors %} {{ form.captcha.errors[0] }} {% else %} please fill captcha {% endif %}">
+        </div>
+    </div>
+</div>
+{% endmacro %}
+
+{% macro render_info_bulletin(record) %}
+
+<h4 class="media-heading">{{ record.name }}</h4>
+<ul style="list-style: none;">
+    <li>
+        <span class="glyphicon glyphicon-flag"></span>
+        <span>{{ record.nation }}</span>
+    </li>
+    <li>
+        <span class="glyphicon glyphicon-list-alt"></span>
+        <span>{{ record.party }}</span>
+    </li>
+    <li>
+        <span class="glyphicon glyphicon-tags"></span>
+        <span>{{ record.group }}</span>
+    </li>
+    <li>
+        <span class="glyphicon glyphicon-link"></span>
+        <span><a href="{{ record.url }}" target="_blank">{{ record.url }}</a></span>
+    </li>
+    <li>
+        <span class="glyphicon glyphicon-envelope"></span>
+        <span><a href="mailto:{{ record.email }}">{{ record.email }}</a></span>
+    </li>
+    <li>
+        <span class="glyphicon glyphicon-phone-alt"></span>
+        <span>{{ record.phone }}</span>
+    </li>
+</ul>
+{% endmacro %}
+
+
+{% macro render_info_bulletin_xs(record) %}
+<h4>{{ record.name }}</h4>
+<div class="media">
+    <div class="media-left">
+        <img class="img-thumbnail" style="max-width: 150px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
+    </div>
+    <div class="media-body">
+        <div>
+            <span class="glyphicon glyphicon-flag"></span>
+            <span class="small">{{ record.nation }}</span>
+        </div>
+        <div>
+            <span class="glyphicon glyphicon-list-alt"></span>
+            <span class="small">{{ record.party }}</span>
+        </div>
+        <div>
+            <span class="glyphicon glyphicon-link"></span>
+            <span class="small"><a href="{{ record.url }}" target="_blank">homepage</a></span>
+        </div>
+        <div>
+            <span class="glyphicon glyphicon-envelope"></span>
+            <span class="small"><a href="mailto:{{ record.email }}">email</a></span>
+        </div>
+        <div>
+            <span class="glyphicon glyphicon-phone-alt"></span>
+            <span class="small">{{ record.phone }}</span>
+        </div>
+    </div>
+    <div style="font-size: smaller;">{{ record.license}}</div>
+</div>
+{% endmacro %}
+
+{% macro render_phone_input_group(form, record) %}
+<input type="hidden" name="{{ form.id_mdb.name }}" id="{{ form.id_mdb.name }}" value="{{ record.id }}">
+<p>
+    <div class="input-group {% if form.phone_number.errors %} has-error {% endif %}">
+        <span class="input-group-addon"><div class="glyphicon glyphicon-earphone"></div></span>
+        <input id="{{ form.phone_number.name }}" name="{{ form.phone_number.name }}" class="form-control" placeholder="{% if form.phone_number.errors %} {% for error in form.phone_number.errors %} {{ error }} {% endfor %} {% else %} +49 30 12345678 - gib hier deine Telefonnummer ein. Wir verbinden Dich. Kostenfrei. {% endif %}" value="{% if form.phone_number.data %} {{ form.phone_number.data }} {% endif %}">
+    </div>
+</p>
+{% endmacro %}

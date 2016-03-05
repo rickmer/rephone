@@ -9,105 +9,35 @@
         <script type="application/javascript">$(document).ready(function () {refresh_captcha();})</script>
     </head>
     <body>
-        {% from "captcha.html" import render_captcha %}
+        {% from "_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group %}
         <div class="row">
-            <div class="well well-lg">
-                <div class="media-object visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
-                    <div class="media-left">
-                        <img class="img-thumbnail" style="max-width: 300px; max-height: 300px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
-                        <div class="small">{{ record.license}}</div>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading">{{ record.name }}</h4>
-                        <ul style="list-style: none;">
-                            <li>
-                                <span class="glyphicon glyphicon-flag"></span>
-                                <span>{{ record.nation }}</span>
-                            </li>
-                            <li>
-                                <span class="glyphicon glyphicon-list-alt"></span>
-                                <span>{{ record.party }}</span>
-                            </li>
-                            <li>
-                                <span class="glyphicon glyphicon-tags"></span>
-                                <span>{{ record.group }}</span>
-                            </li>
-                            <li>
-                                <span class="glyphicon glyphicon-link"></span>
-                                <span><a href="{{ record.url }}" target="_blank">{{ record.url }}</a></span>
-                            </li>
-                            <li>
-                                <span class="glyphicon glyphicon-envelope"></span>
-                                <span><a href="mailto:{{ record.email }}">{{ record.email }}</a></span>
-                            </li>
-                            <li>
-                                <span class="glyphicon glyphicon-phone-alt"></span>
-                                <span>{{ record.phone }}</span>
-                            </li>
-                        </ul>
-                        <form id="CallForm" class="form" method="POST" role="form" action="/embedded/{{ campaign }}">
-                            {{ form.hidden_tag() }}
-                            <input type="hidden" name="{{ form.id_mdb.name }}" id="{{ form.id_mdb.name }}" value="{{ record.id }}">
-                            <p>
-                                <div class="input-group {% if form.phone_number.errors %} has-error {% endif %}">
-                                    <span class="input-group-addon"><div class="glyphicon glyphicon-earphone"></div></span>
-                                    <input id="{{ form.phone_number.name }}" name="{{ form.phone_number.name }}" class="form-control" placeholder="{% if form.phone_number.errors %} {% for error in form.phone_number.errors %} {{ error }} {% endfor %} {% else %} +49 30 12345678 - gib hier deine Telefonnummer ein. Wir verbinden Dich. Kostenfrei. {% endif %}" value="{% if form.phone_number.data %} {{ form.phone_number.data }} {% endif %}">
-                                </div>
-                            </p>
-                            <p>
-                                <button id="CallButton" class="btn btn-primary">Anrufen!</button>
-                                <a href="/embedded/{{ campaign }}" class="btn btn-info">jemand anderen anrufen ...</a>
-                            </p>
-                            {{ render_captcha(form) }}
-                        </form>
-                    </div>
-                </div>
-                <div class="visible-xs-block">
-                    <h4>{{ record.name }}</h4>
-                    <div class="media">
+            <a href="/{{ campaign }}" class="pull-right" style="margin-right: 25px; margin-top: 5px;" target="_parent">CallForDemocracy.org</a>
+            <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign }}">
+                {{ form.hidden_tag() }}
+                <div class="well well-lg">
+                    <div class="media-object visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
                         <div class="media-left">
-                            <img class="img-thumbnail" style="max-width: 150px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
+                            <img class="img-thumbnail" style="max-width: 300px; max-height: 300px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
+                            <div class="small">{{ record.license}}</div>
                         </div>
                         <div class="media-body">
-                            <div>
-                                <span class="glyphicon glyphicon-flag"></span>
-                                <span class="small">{{ record.nation }}</span>
-                            </div>
-                            <div>
-                                <span class="glyphicon glyphicon-list-alt"></span>
-                                <span class="small">{{ record.party }}</span>
-                            </div>
-                            <div>
-                                <span class="glyphicon glyphicon-link"></span>
-                                <span class="small"><a href="{{ record.url }}" target="_blank">homepage</a></span>
-                            </div>
-                            <div>
-                                <span class="glyphicon glyphicon-envelope"></span>
-                                <span class="small"><a href="mailto:{{ record.email }}">email</a></span>
-                            </div>
-                            <div>
-                                <span class="glyphicon glyphicon-phone-alt"></span>
-                                <span class="small">{{ record.phone }}</span>
-                            </div>
+                            {{ render_info_bulletin(record) }}
+                            {{ render_phone_input_group(form, record) }}
+                            <p>
+                                <button id="CallButton" class="btn btn-primary">Anrufen!</button>
+                                <a href="/{{ campaign }}" class="btn btn-info">jemand anderen anrufen ...</a>
+                            </p>
                         </div>
-                        <div style="font-size: smaller;">{{ record.license}}</div>
                     </div>
-                    <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign }}">
-                        {{ form.hidden_tag() }}
-                        <input type="hidden" name="{{ form.id_mdb.name }}" id="{{ form.id_mdb.name }}" value="{{ record.id }}">
-                        <p>
-                            <div class="input-group {% if form.phone_number.errors %} has-error {% endif %}">
-                                <span class="input-group-addon"><div class="glyphicon glyphicon-earphone"></div></span>
-                                <input id="{{ form.phone_number.name }}" name="{{ form.phone_number.name }}" class="form-control" placeholder="{% if form.phone_number.errors %} {% for error in form.phone_number.errors %} {{ error }} {% endfor %} {% else %} +49 30 12345678 - gib hier deine Telefonnummer ein. Wir verbinden Dich. Kostenfrei. {% endif %}" value="{% if form.phone_number.data %} {{ form.phone_number.data }} {% endif %}">
-                            </div>
-                        </p>
+                    <div class="visible-xs-block">
+                        {{ render_info_bulletin_xs(record) }}
+                        {{ render_phone_input_group(form, record) }}
                         <button id="CallButton" class="btn btn-primary btn-block">Anrufen!</button>
                         <a href="/{{ campaign }}" class="btn btn-info btn-block">jemand anderen anrufen ...</a>
-                        {{ render_captcha(form) }}
-                    </form>
                 </div>
-                <a href="/{{ campaign }}" class="pull-right" style="margin-top: -20px;" target="_parent">CallForDemocracy.org</a>
-            </div>
+                    {{ render_captcha(form) }}
+                </div>
+            </form>
         </div>
     </body>
 </html>
