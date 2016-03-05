@@ -1,5 +1,5 @@
 Flask==0.10.1
-Flask-Captcha==0.1.8
+git+git://github.com/rickmer/flask-captcha.git
 Flask-SQLAlchemy==1.0
 Flask-Testing==0.4.2
 Flask-WTF==0.12
