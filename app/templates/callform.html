@@ -5,27 +5,23 @@
             <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign }}">
                 {{ form.hidden_tag() }}
                 <div class="well well-lg">
-                    <div class="media-object visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
+                    <div class="media-object">
                         <div class="media-left">
-                            <img class="img-thumbnail" style="max-width: 300px; max-height: 300px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
-                            <div class="small">{{ record.license}}</div>
+                            <img class="img-thumbnail visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" style="width: 200px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
+                            <div class="small visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">{{ record.license}}</div>
                         </div>
                         <div class="media-body">
+                            <h4 class="media-heading">{{ record.name }}</h4>
+                            {{ render_info_bulletin_xs(record) }}
                             {{ render_info_bulletin(record) }}
                             {{ render_phone_input_group(form, record) }}
-                            <p>
-                                <button id="CallButton" class="btn btn-primary">Anrufen!</button>
-                                <a href="/{{ campaign }}" class="btn btn-info">jemand anderen anrufen ...</a>
-                            </p>
+                            {{ render_captcha(form, captcha_activated)}}
+                            <a href="/{{ campaign }}" class="btn btn-block btn-info visible-xs-block">jemand anderen anrufen ...</a>
+                            <button id="CallButton" class="btn btn-block btn-primary visible-xs-block">Anrufen!</button>
+                            <a href="/{{ campaign }}" class="btn btn-info visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">jemand anderen anrufen ...</a>
+                            <button id="CallButton" class="btn btn-primary visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">Anrufen!</button>
                         </div>
                     </div>
-                    <div class="visible-xs-block">
-                        {{ render_info_bulletin_xs(record) }}
-                        {{ render_phone_input_group(form, record) }}
-                        <button id="CallButton" class="btn btn-primary btn-block">Anrufen!</button>
-                        <a href="/{{ campaign }}" class="btn btn-info btn-block">jemand anderen anrufen ...</a>
-                </div>
-                    {{ render_captcha(form, captcha_activated) }}
                 </div>
             </form>
         </div>

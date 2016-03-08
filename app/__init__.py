@@ -29,7 +29,6 @@ def create_app(config_override=None):
 
     @app.context_processor
     def inject_into_jinja_templates():
-        return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'],
-                    test='test')
+        return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'])
 
     return app
