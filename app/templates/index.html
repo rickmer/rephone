@@ -5,7 +5,10 @@
     {{ render_head(captcha_activated) }}
 </head>
 <body>
-    <div class="container">
+<a class="visible-sm visible-md visible-lg" href="https://github.com/rickmer/rephone">
+    <img id="octocat" src="{{ url_for('static', filename='assets/forkme.png') }}" alt="Fork me on GitHub">
+</a>
+    <div class="container col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
         <div class="row" style="padding-top: 10px;">
             <nav class="navbar navbar-default" role="navigation">
                 <div class="container-fluid">
