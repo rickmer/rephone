@@ -6,7 +6,7 @@
                 {{ form.hidden_tag() }}
                 <div class="well well-lg">
                     <div class="media-object">
-                        <div class="media-left">
+                        <div class="media-left hidden-xs">
                             <img class="img-thumbnail visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" style="width: 200px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
                             <div class="small visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">{{ record.license}}</div>
                         </div>
