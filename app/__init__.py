@@ -3,7 +3,7 @@ from .models import db
 from flask.ext.captcha import Captcha
 
 
-def create_app(config_override=None):
+def create_app(config_override=None, config_file=None):
     from .views import main as main_blueprint
     from flask.ext.captcha.views import captcha_blueprint
     app = Flask(__name__)
@@ -17,6 +17,8 @@ def create_app(config_override=None):
     if config_override:
         for key in config_override:
             app.config[key] = config_override[key]
+    if config_file:
+        app.config.from_pyfile(filename='/'.join(['..', config_file]))
     # initialize database
     db.init_app(app=app)
     # initialize captcha
