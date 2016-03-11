@@ -31,4 +31,11 @@ def create_app(config_override=None):
     def inject_into_jinja_templates():
         return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'])
 
+    with app.app_context():
+        from .random.bias import Bias
+        app.test = Bias()
+
+        app.test.store_value(audience_id=1, respondent_id=1)
+        print(app.test.bias_vectors[1])
+
     return app
