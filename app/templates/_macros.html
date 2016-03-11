@@ -102,3 +102,44 @@
 <script type="application/javascript">$(document).ready(function () {refresh_captcha();})</script>
 {% endif %}
 {% endmacro%}
+
+{% macro render_impressum_trigger() %}
+<a href="#" data-toggle="modal" data-target="#impressumModal">Impressum</a>
+{% endmacro %}
+
+{% macro render_impressum_modal(impressum) %}
+<div class="modal fade" id="impressumModal" tabindex="-1" role="dialog" aria-labelledby="impressumModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="impressumModalLabel">Impressum</h4>
+      </div>
+      <div class="modal-body">
+        <h4>Angaben gemäß § 5 TMG:</h4>
+          <address>
+              <p>{{ impressum.name }}</p>
+              <p>{{ impressum.street}}</p>
+              <p>{{ impressum.plz }} {{ impressum.city}}</p>
+          </address>
+          <address>
+            <p>Telefon: {{ impressum.phone }}</p>
+            <p>E-Mail: {{ impressum.mail }}</p>
+          </address>
+        <h4>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:</h4>
+          {{ impressum.name }}
+        <hr>
+        <h4>Haftungausschluss</h4>
+        <p>
+          <h5>Haftung für Inhalte</h5>
+          {{ impressum.text_content }}
+        </p>
+        <p>
+            <h5>Haftung für Links</h5>
+            {{ impressum.text_links }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

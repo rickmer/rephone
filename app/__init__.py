@@ -13,6 +13,7 @@ def create_app(config_override=None):
     app.config.from_object('app.config.security')
     app.config.from_object('app.config.twilio')
     app.config.from_object('app.config.captcha')
+    app.config.from_object('app.config.impressum')
     if config_override:
         for key in config_override:
             app.config[key] = config_override[key]
@@ -29,6 +30,7 @@ def create_app(config_override=None):
 
     @app.context_processor
     def inject_into_jinja_templates():
-        return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'])
+        return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'],
+                    impressum=app.config['IMPRESSUM'])
 
     return app

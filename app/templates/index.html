@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-{% from "_macros.html" import render_head %}
+{% from "_macros.html" import render_head, render_impressum_trigger, render_impressum_modal %}
 <head>
     {{ render_head(captcha_activated) }}
 </head>
@@ -24,7 +24,7 @@
                     <div class="collapse navbar-collapse navbar-right" id="mymenu">
                         <ul class="nav navbar-nav">
                             <li>
-                                <a href="#">Impressum</a>
+                                {{ render_impressum_trigger() }}
                             </li>
                         </ul>
                     </div>
@@ -43,5 +43,6 @@
         {% block content %}
         {% endblock %}
     </div>
+    {{ render_impressum_modal(impressum) }}
 </body>
 </html>
