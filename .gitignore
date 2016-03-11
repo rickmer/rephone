@@ -5,3 +5,4 @@ lib
 bin
 include
 .pyc
+config.py
