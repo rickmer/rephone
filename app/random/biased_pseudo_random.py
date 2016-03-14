@@ -1,7 +1,3 @@
-from random import randint
-from array import array
-
-
 class BiasedRandomDistribution(object):
     """
     A pseudo random number generator that can be biased to promote a pseudo random distribution
@@ -18,6 +14,7 @@ class BiasedRandomDistribution(object):
                                   between 1 and 4 where 1,2 and 4 have the initial chance of 1/5
                                   and 3 has the initial chance of 2/5.
         """
+        from array import array
         if type(cardinal) == list:
             self.distribution_vector = array('I', cardinal)
             self.base = 0
@@ -33,15 +30,28 @@ class BiasedRandomDistribution(object):
         else:
             raise TypeError
 
+    def __iter__(self):
+        return iter(self.distribution_vector)
+
+    def __getitem__(self, item):
+        return self.distribution_vector[item]
+
+    def __str__(self):
+        return str(list(self.distribution_vector))
+
+    def __len__(self):
+        return len(self.distribution_vector)
+
     def _get_biased_random_number_(self):
         """
         :return: biased pseudo random integer between 1 and initial cardinality.
         """
+        from random import randint
         basis = self._get_base_()
         random = randint(0, basis - 1)
         counter = 0
         temp_value = 0
-        for number in self.distribution_vector:
+        for number in self:
             counter += 1
             temp_value += number
             if temp_value >= random:
@@ -53,7 +63,7 @@ class BiasedRandomDistribution(object):
         :return: int
         """
         self.base = 0
-        for number in self.distribution_vector:
+        for number in self:
             self.base += number
         return self.base
 
@@ -65,7 +75,7 @@ class BiasedRandomDistribution(object):
         if index > self.cardinal - 1 or index < 0:
             raise IndexError
         loop_index = 0
-        for _ in self.distribution_vector:
+        for _ in self:
             if loop_index != index:
                 self.distribution_vector[loop_index] += 1
             loop_index += 1

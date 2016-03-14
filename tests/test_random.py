@@ -11,5 +11,5 @@ def test_biased_pseudo_random_distribution():
         random_number = biased_randomness.get_random_value()
         biased_randomness.add_sample(random_number)
     print(biased_randomness.distribution_vector)
-    for integer in list(biased_randomness.distribution_vector):
+    for integer in biased_randomness:
         assert integer / 100 >= 9.9
