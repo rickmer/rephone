@@ -1,5 +1,6 @@
 from .biased_pseudo_random import BiasedRandomDistribution
 from app.models import RandomBias, Audience, db
+from operator import attrgetter
 
 
 class BiasedRandomValue(object):
@@ -9,7 +10,7 @@ class BiasedRandomValue(object):
         audiences = Audience().query.all()
         for audience in audiences:
             vector = []
-            biases = RandomBias().query.filter_by(id_audience=audience.id).all()
+            biases = sorted(RandomBias().query.filter_by(id_audience=audience.id).all(), key=attrgetter('vector_index'))
             if len(biases) == 0:
                 for _ in audience.respondents:
                     vector.append(1)
@@ -27,14 +28,19 @@ class BiasedRandomValue(object):
     def get_random_value(self, audience_id):
         return self[audience_id].get_random_value()
 
-    def add_sample(self, audience_id, value):
-        self[audience_id].add_sample(value)
-        biases = RandomBias().query.filter_by(id_audience=audience_id).all()
+    def add_sample(self, audience_id, respondent_id):
+        index = RandomBias().query.filter_by(id_audience=audience_id, id_respondent=respondent_id).first().vector_index
+        self[audience_id].add_sample(index)
+        biases = sorted(RandomBias().query.filter_by(id_audience=audience_id).all(), key=attrgetter('vector_index'))
         if len(biases) == 0:
-            for i in range(1, len(self[audience_id]) + 1):
+            audience = Audience().query.filter_by(id=audience_id).first()
+            index_counter = 0
+            for respondent in sorted(audience.respondents, key=attrgetter('id')):
                 random_bias = RandomBias(id_audience=audience_id,
-                                         id_respondent=i,
+                                         id_respondent=respondent.id,
+                                         vector_index=index_counter,
                                          distribution_value=1)
+                index_counter += 1
                 db.session.add(random_bias)
         else:
             vector_index = 0

@@ -51,4 +51,5 @@ class RandomBias(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     id_audience = db.Column(db.Integer())
     id_respondent = db.Column(db.Integer())
+    vector_index = db.Column(db.Integer())
     distribution_value = db.Column(db.BigInteger())

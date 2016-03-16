@@ -52,10 +52,10 @@ class BiasedRandomDistribution(object):
         counter = 0
         temp_value = 0
         for number in self:
-            counter += 1
             temp_value += number
             if temp_value >= random:
                 return counter
+            counter += 1
 
     def _get_base_(self):
         """
@@ -67,7 +67,7 @@ class BiasedRandomDistribution(object):
             self.base += number
         return self.base
 
-    def _mutate_(self, index):
+    def add_sample(self, index):
         """
         Alters the distribution vector.
         :param index: integer value between 0 and cardinality - 1
@@ -80,13 +80,6 @@ class BiasedRandomDistribution(object):
                 self.distribution_vector[loop_index] += 1
             loop_index += 1
         self._get_base_()
-
-    def add_sample(self, integer):
-        """
-        Alter the distribution vector
-        :param integer: value between 1 and cardinality.
-        """
-        self._mutate_(integer - 1)
 
     def get_random_value(self):
         """

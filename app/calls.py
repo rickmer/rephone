@@ -3,7 +3,6 @@ from .models import Respondent, Campaign, Audience
 from .forms import CallForm
 from twilio import twiml
 from twilio.rest import TwilioRestClient
-from random import randint
 from operator import attrgetter
 
 
@@ -76,7 +75,8 @@ def initiate_call(record_id, tel_caller, audience_id):
     """
     Dispatch a call to the user provided Phone number.
     :param record_id: if of the respondent to finally receive the call.
-    :param tel_caller: phone number of the user
+    :param tel_caller: phone number of the user.
+    :param audience_id: the id of the audience whoms randomness needs to be biased.
     :return: True iff call was successfully dispatched.
     """
     callback_uri = url_for('.outbound',
@@ -98,4 +98,5 @@ def initiate_call(record_id, tel_caller, audience_id):
     except Exception as e:
         current_app.logger.error(e)
         return False
+    current_app.random.add_sample(audience_id=audience_id, respondent_id=record_id)
     return True
