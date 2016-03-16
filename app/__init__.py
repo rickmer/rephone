@@ -30,7 +30,7 @@ def create_app(config_override=None):
     @app.context_processor
     def inject_into_jinja_templates():
         return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'])
-
+    # initialize biased pseudo random distribution
     with app.app_context():
         from .random.bias import BiasedRandomValue
         app.random = BiasedRandomValue()

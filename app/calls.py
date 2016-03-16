@@ -25,7 +25,7 @@ def make_call(request, id_campaign=1, embedded=False):
         template = 'callform.html'
     if request.method == 'GET':
         audience = Audience().query.filter_by(id=campaign.id_audience).first()
-        random_id = randint(0, 750)
+        random_id = current_app.random.get_random_value(campaign.id_audience)
         record = sorted(audience.respondents, key=attrgetter('id'))[random_id]
         return render_template(template, record=record, form=form, campaign=id_campaign)
     elif request.method == 'POST':
@@ -33,7 +33,9 @@ def make_call(request, id_campaign=1, embedded=False):
             record = Respondent().query.filter_by(id=form.id_mdb.data).first()
             tel_mdb = record.phone
             tel_caller = form.phone_number.data
-            if not initiate_call(record_id=form.id_mdb.data, tel_caller=tel_caller):
+            if not initiate_call(record_id=form.id_mdb.data,
+                                 tel_caller=tel_caller,
+                                 audience_id=campaign.id_audience):
                 flash('something went wrong', category='warning')
                 return render_template(template, record=record, form=form, campaign=id_campaign)
             else:
@@ -70,14 +72,17 @@ def make_outbound_call(record_id):
     return str(response)
 
 
-def initiate_call(record_id, tel_caller):
+def initiate_call(record_id, tel_caller, audience_id):
     """
     Dispatch a call to the user provided Phone number.
     :param record_id: if of the respondent to finally receive the call.
     :param tel_caller: phone number of the user
     :return: True iff call was successfully dispatched.
     """
-    callback_uri = url_for('.outbound', _external=True, _scheme='https', record_id=str(record_id))
+    callback_uri = url_for('.outbound',
+                           _external=True,
+                           _scheme='https',
+                           record_id=str(record_id))
     try:
         twilio_client = TwilioRestClient(current_app.config['TWILIO_ACCOUNT_SID'],
                                          current_app.config['TWILIO_AUTH_TOKEN'])

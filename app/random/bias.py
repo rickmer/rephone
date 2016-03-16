@@ -25,7 +25,7 @@ class BiasedRandomValue(object):
         return self.list_of_vectors[item - 1]
 
     def get_random_value(self, audience_id):
-        return self.list_of_vectors[audience_id].get_random_value()
+        return self[audience_id].get_random_value()
 
     def add_sample(self, audience_id, value):
         self[audience_id].add_sample(value)
