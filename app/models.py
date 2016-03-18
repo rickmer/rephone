@@ -42,3 +42,14 @@ class Audience(db.Model):
     respondents = db.relationship('Respondent',
                                   secondary=audience_respondent,
                                   backref=db.backref('respondents', lazy='dynamic'))
+
+
+class RandomBias(db.Model):
+    """
+    ORM model for biased random distribution.
+    """
+    id = db.Column(db.Integer(), primary_key=True)
+    id_audience = db.Column(db.Integer())
+    id_respondent = db.Column(db.Integer())
+    vector_index = db.Column(db.Integer())
+    distribution_value = db.Column(db.BigInteger())

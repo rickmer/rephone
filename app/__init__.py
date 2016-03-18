@@ -34,5 +34,9 @@ def create_app(config_override=None, config_file=None):
     def inject_into_jinja_templates():
         return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'],
                     impressum=app.config['IMPRESSUM'])
+    # initialize biased pseudo random distribution
+    with app.app_context():
+        from .random.bias import BiasedRandomValue
+        app.random = BiasedRandomValue()
 
     return app
