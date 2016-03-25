@@ -13,7 +13,9 @@ We believe in the power of the people and want to contribute that their voices a
 ## Installation
 ```
 git clone https://github.com/rickmer/rephone.git
-
+```
+Rephone requires gcc-4.8, gcc-4.9 or higher to build due to dependencies in the Python libs.
+```
 make install
 ```
 
