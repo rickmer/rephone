@@ -30,8 +30,9 @@ Test web server on your favorite browser: http://localhost:5001
 
 ## usage
 ```
-usage: run.py [-h] [--debug] [--demo] [--port PORT] [--single_threaded]
-              [--generate_captcha] [--config_file CONFIG_FILE]
+usage: run.py [-h] [--debug] [--demo] [--host HOST] [--port PORT]
+              [--single_threaded] [--generate_captcha]
+              [--config_file CONFIG_FILE]
 
 rephone - a free telephone call/callback system.
 
@@ -39,6 +40,7 @@ optional arguments:
   -h, --help            show this help message and exit
   --debug               Run with Interactive Debugger
   --demo                Demo Mode; Doesn't make outbound calls.
+  --host HOST           Address to listen to
   --port PORT           tcp port to listen to
   --single_threaded     disable multi-threading
   --generate_captcha    (re)generates captcha images
