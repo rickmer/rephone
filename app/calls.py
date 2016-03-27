@@ -64,6 +64,9 @@ def make_outbound_call(record_id):
 
     if current_app.config['demo_mode']:
         response.hangup()
+    elif current_app.config['TWILIO_TEST_NUMBER']:
+        with response.dial() as dial:
+            dial.number(current_app.config['TWILIO_TEST_NUMBER'])
     else:
         with response.dial() as dial:
             dial.number(record.phone)

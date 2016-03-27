@@ -15,6 +15,13 @@ class TestViews(RephoneTest):
             assert response.status_code == 200
             assert match(r'.*<Dial><Number>\+32022845572</Number></Dial>.*', str(response.get_data()))
 
+    def test_outbound_test_number(self):
+        with self.client:
+            self.app.config['TWILIO_TEST_NUMBER'] = '+4940123456789'
+            response = self.client.post('/outbound/1')
+            assert response.status_code == 200
+            assert match(r'.*<Dial><Number>\+4940123456789</Number></Dial>.*', str(response.get_data()))
+
     def test_bias_alteration(self):
         index_0_before = self.app.random[0][0]
         index_1_before = self.app.random[0][1]
