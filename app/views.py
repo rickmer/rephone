@@ -1,4 +1,4 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, Response
 from .calls import make_call, make_outbound_call
 main = Blueprint('main', __name__)
 
@@ -25,4 +25,5 @@ def outbound(record_id):
 
 @main.route('/outbound/status/', methods=['POST'])
 def status():
-    pass
+    print(request.values)
+    return Response(status=200)

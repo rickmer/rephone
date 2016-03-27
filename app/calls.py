@@ -90,6 +90,12 @@ def initiate_call(record_id, tel_caller, audience_id):
                            _external=True,
                            _scheme='https',
                            record_id=str(record_id))
+
+
+    status_uri = url_for('.status',
+                         _external=True,
+                         _scheme='https')
+
     try:
         twilio_client = TwilioRestClient(current_app.config['TWILIO_ACCOUNT_SID'],
                                          current_app.config['TWILIO_AUTH_TOKEN'])
@@ -101,7 +107,11 @@ def initiate_call(record_id, tel_caller, audience_id):
         twilio_client.calls.create(from_=current_app.config['TWILIO_CALLER_ID'],
                                    to=tel_caller,
                                    url=callback_uri,
-                                   method='POST')
+                                   method='POST',
+                                   status_callback=status_uri,
+                                   status_callback_method='POST',
+                                   status_callback_events=['completed'])
+
     except Exception as e:
         current_app.logger.error(e)
         return False
