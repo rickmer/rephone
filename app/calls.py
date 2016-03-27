@@ -45,12 +45,16 @@ def make_call(request, id_campaign=1, embedded=False):
             return render_template(template, record=record, form=form, campaign=id_campaign)
 
 
-def make_outbound_call(record_id):
+def make_outbound_call(record_id, request):
     """
     Twilio callback for a call to get connected to the respective respondent.
     :param record_id: id of the respondent
     :return: flask response (XML).
     """
+
+    print(request.values)
+    print(request.values['CallSid'])
+
 
     response = twiml.Response()
 

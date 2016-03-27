@@ -20,4 +20,9 @@ def embedded_campaign(id_campaign):
 
 @main.route('/outbound/<record_id>', methods=['POST'])
 def outbound(record_id):
-    return make_outbound_call(record_id)
+    return make_outbound_call(record_id, request)
+
+
+@main.route('/outbound/status/', methods=['POST'])
+def status():
+    pass
