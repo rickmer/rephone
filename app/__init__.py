@@ -14,6 +14,7 @@ def create_app(config_override=None, config_file=None):
     app.config.from_object('app.config.twilio')
     app.config.from_object('app.config.captcha')
     app.config.from_object('app.config.impressum')
+    app.config.from_object('app.config.abuse')
     if config_override:
         for key in config_override:
             app.config[key] = config_override[key]

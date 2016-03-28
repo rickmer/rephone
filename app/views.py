@@ -20,10 +20,12 @@ def embedded_campaign(id_campaign):
 
 @main.route('/outbound/<record_id>', methods=['POST'])
 def outbound(record_id):
-    return make_outbound_call(record_id, request)
+    return make_outbound_call(record_id)
 
 
 @main.route('/outbound/status/', methods=['POST'])
 def status():
-    print(request.values)
+    from .abuse.calls import abuse_detected
+    abuse_detected(phone_number=request.values['To'],
+                   duration=request.values['CallDuration'])
     return Response(status=200)

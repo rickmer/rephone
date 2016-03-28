@@ -53,3 +53,12 @@ class RandomBias(db.Model):
     id_respondent = db.Column(db.Integer())
     vector_index = db.Column(db.Integer())
     distribution_value = db.Column(db.BigInteger())
+
+
+class PossibleAbuses(db.Model):
+    """
+    ORM model for usage data to detect and prevent abuse.
+    """
+    id = db.Column(db.String(64), primary_key=True)
+    short_calls = db.Column(db.Integer())
+    date = db.Column(db.Date())

@@ -30,4 +30,6 @@ class CallForm(Form):
         if not PhoneNumber(self.phone_number).is_from(49):
             self.phone_number.errors.append('Dies ist keine deutsche Rufnummer.')
             return False
+
+        self.phone_number.data = PhoneNumber(self.phone_number).get_e164_format()
         return True

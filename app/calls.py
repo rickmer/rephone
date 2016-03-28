@@ -1,6 +1,7 @@
 from flask import render_template, flash, url_for, current_app, abort
 from .models import Respondent, Campaign, Audience
 from .forms import CallForm
+from .abuse.calls import abuse_detected
 from twilio import twiml
 from twilio.rest import TwilioRestClient
 from operator import attrgetter
@@ -32,6 +33,9 @@ def make_call(request, id_campaign=1, embedded=False):
             record = Respondent().query.filter_by(id=form.id_mdb.data).first()
             tel_mdb = record.phone
             tel_caller = form.phone_number.data
+            if abuse_detected(phone_number=tel_caller):
+                flash('I’m sorry Dave, I’m afraid I can’t do that.', category='warning')
+                return render_template(template, record=record, form=form, campaign=id_campaign)
             if not initiate_call(record_id=form.id_mdb.data,
                                  tel_caller=tel_caller,
                                  audience_id=campaign.id_audience):
@@ -43,39 +47,6 @@ def make_call(request, id_campaign=1, embedded=False):
         else:
             record = Respondent().query.filter_by(id=form.id_mdb.data).first()
             return render_template(template, record=record, form=form, campaign=id_campaign)
-
-
-def make_outbound_call(record_id, request):
-    """
-    Twilio callback for a call to get connected to the respective respondent.
-    :param record_id: id of the respondent
-    :return: flask response (XML).
-    """
-
-    print(request.values)
-    print(request.values['CallSid'])
-
-
-    response = twiml.Response()
-
-    record = Respondent().query.filter_by(id=record_id).first()
-    if record is None:
-        return abort(404)
-
-    response.say("Hallo! Wir verbinden Dich jetzt. Danke für Deine Zeit.",
-                 voice='alice',
-                 language='de')
-
-    if current_app.config['demo_mode']:
-        response.hangup()
-    elif current_app.config['TWILIO_TEST_NUMBER']:
-        with response.dial() as dial:
-            dial.number(current_app.config['TWILIO_TEST_NUMBER'])
-    else:
-        with response.dial() as dial:
-            dial.number(record.phone)
-
-    return str(response)
 
 
 def initiate_call(record_id, tel_caller, audience_id):
@@ -90,7 +61,6 @@ def initiate_call(record_id, tel_caller, audience_id):
                            _external=True,
                            _scheme='https',
                            record_id=str(record_id))
-
 
     status_uri = url_for('.status',
                          _external=True,
@@ -117,3 +87,32 @@ def initiate_call(record_id, tel_caller, audience_id):
         return False
     current_app.random.add_sample(audience_id=audience_id, respondent_id=record_id)
     return True
+
+
+def make_outbound_call(record_id):
+    """
+    Twilio callback for a call to get connected to the respective respondent.
+    :param record_id: id of the respondent
+    :return: flask response (XML).
+    """
+
+    response = twiml.Response()
+
+    record = Respondent().query.filter_by(id=record_id).first()
+    if record is None:
+        return abort(404)
+
+    response.say("Hallo! Wir verbinden Dich jetzt. Danke für Deine Zeit.",
+                 voice='alice',
+                 language='de')
+
+    if current_app.config['demo_mode']:
+        response.hangup()
+    elif current_app.config['TWILIO_TEST_NUMBER']:
+        with response.dial() as dial:
+            dial.number(current_app.config['TWILIO_TEST_NUMBER'])
+    else:
+        with response.dial() as dial:
+            dial.number(record.phone)
+
+    return str(response)
