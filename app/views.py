@@ -1,21 +1,30 @@
 from flask import Blueprint, request, Response
-from .calls import make_call, make_outbound_call
+from .calls import make_outbound_call, get_call_widget, post_call_widget
 main = Blueprint('main', __name__)
 
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    return make_call(request)
+    if request.method == 'GET':
+        return get_call_widget(request)
+    elif request.method == 'POST':
+        return post_call_widget(request)
 
 
 @main.route('/<id_campaign>', methods=['GET', 'POST'])
 def campaign(id_campaign):
-    return make_call(request, id_campaign)
+    if request.method == 'GET':
+        return get_call_widget(request, id_campaign)
+    elif request.method == 'POST':
+        return post_call_widget(request, id_campaign)
 
 
 @main.route('/embedded/<id_campaign>', methods=['GET', 'POST'])
 def embedded_campaign(id_campaign):
-    return make_call(request, id_campaign, embedded=True)
+    if request.method == 'GET':
+        return get_call_widget(request, id_campaign, embedded=True)
+    elif request.method == 'POST':
+        return post_call_widget(request, id_campaign, embedded=True)
 
 
 @main.route('/outbound/<record_id>', methods=['POST'])

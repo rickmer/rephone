@@ -7,9 +7,9 @@ from twilio.rest import TwilioRestClient
 from operator import attrgetter
 
 
-def make_call(request, id_campaign=1, embedded=False):
+def post_call_widget(request, id_campaign=1, embedded=False):
     """
-    Render a call page.
+    Render a call page due to a post request.
     :param request: a flask request object.
     :param id_campaign: an campaign id.
     :param embedded: True if embed template is supposed to be rendered.
@@ -23,30 +23,46 @@ def make_call(request, id_campaign=1, embedded=False):
         template = 'callform_embedded.html'
     else:
         template = 'callform.html'
-    if request.method == 'GET':
-        audience = Audience().query.filter_by(id=campaign.id_audience).first()
-        random_id = current_app.random.get_random_value(campaign.id_audience)
-        record = sorted(audience.respondents, key=attrgetter('id'))[random_id]
-        return render_template(template, record=record, form=form, campaign=id_campaign)
-    elif request.method == 'POST':
-        if form.validate_on_submit():
-            record = Respondent().query.filter_by(id=form.id_mdb.data).first()
-            tel_mdb = record.phone
-            tel_caller = form.phone_number.data
-            if abuse_detected(phone_number=tel_caller):
-                flash('I’m sorry Dave, I’m afraid I can’t do that.', category='warning')
-                return render_template(template, record=record, form=form, campaign=id_campaign)
-            if not initiate_call(record_id=form.id_mdb.data,
-                                 tel_caller=tel_caller,
-                                 audience_id=campaign.id_audience):
-                flash('something went wrong', category='warning')
-                return render_template(template, record=record, form=form, campaign=id_campaign)
-            else:
-                flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb, category='info')
-                return render_template(template, record=record, form=form, campaign=id_campaign)
-        else:
-            record = Respondent().query.filter_by(id=form.id_mdb.data).first()
+    if form.validate_on_submit():
+        record = Respondent().query.filter_by(id=form.id_mdb.data).first()
+        tel_mdb = record.phone
+        tel_caller = form.phone_number.data
+        if abuse_detected(phone_number=tel_caller):
+            flash('I’m sorry Dave, I’m afraid I can’t do that.', category='warning')
             return render_template(template, record=record, form=form, campaign=id_campaign)
+        if not initiate_call(record_id=form.id_mdb.data,
+                             tel_caller=tel_caller,
+                             audience_id=campaign.id_audience):
+            flash('something went wrong', category='warning')
+            return render_template(template, record=record, form=form, campaign=id_campaign)
+        else:
+            flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb, category='info')
+            return render_template(template, record=record, form=form, campaign=id_campaign)
+    else:
+        record = Respondent().query.filter_by(id=form.id_mdb.data).first()
+        return render_template(template, record=record, form=form, campaign=id_campaign)
+
+
+def get_call_widget(request, id_campaign=1, embedded=False):
+    """
+    Render a call page due to a get request.
+    :param request: a flask request object.
+    :param id_campaign: an campaign id.
+    :param embedded: True if embed template is supposed to be rendered.
+    :return: flask response.
+    """
+    form = CallForm(request.form)
+    campaign = Campaign().query.filter_by(id=id_campaign).first()
+    if campaign is None:
+        return abort(404)
+    if embedded:
+        template = 'callform_embedded.html'
+    else:
+        template = 'callform.html'
+    audience = Audience().query.filter_by(id=campaign.id_audience).first()
+    random_id = current_app.random.get_random_value(campaign.id_audience)
+    record = sorted(audience.respondents, key=attrgetter('id'))[random_id]
+    return render_template(template, record=record, form=form, campaign=id_campaign)
 
 
 def initiate_call(record_id, tel_caller, audience_id):
@@ -108,11 +124,10 @@ def make_outbound_call(record_id):
 
     if current_app.config['demo_mode']:
         response.hangup()
-    elif current_app.config['TWILIO_TEST_NUMBER']:
-        with response.dial() as dial:
+    with response.dial() as dial:
+        if current_app.config['TWILIO_TEST_NUMBER']:
             dial.number(current_app.config['TWILIO_TEST_NUMBER'])
-    else:
-        with response.dial() as dial:
+        else:
             dial.number(record.phone)
 
     return str(response)
