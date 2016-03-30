@@ -2,6 +2,7 @@ from flask import render_template, flash, url_for, current_app, abort
 from .models import Respondent, Campaign, Audience
 from .forms import CallForm
 from .abuse.calls import abuse_detected
+from .abuse.client import register_ip_address, is_blocked
 from twilio import twiml
 from twilio.rest import TwilioRestClient
 from operator import attrgetter
@@ -32,7 +33,8 @@ def post_call_widget(request, id_campaign=1, embedded=False):
             return render_template(template, record=record, form=form, campaign=id_campaign)
         if not initiate_call(record_id=form.id_mdb.data,
                              tel_caller=tel_caller,
-                             audience_id=campaign.id_audience):
+                             audience_id=campaign.id_audience,
+                             request=request):
             flash('something went wrong', category='warning')
             return render_template(template, record=record, form=form, campaign=id_campaign)
         else:
@@ -65,14 +67,18 @@ def get_call_widget(request, id_campaign=1, embedded=False):
     return render_template(template, record=record, form=form, campaign=id_campaign)
 
 
-def initiate_call(record_id, tel_caller, audience_id):
+def initiate_call(record_id, tel_caller, audience_id, request):
     """
     Dispatch a call to the user provided Phone number.
     :param record_id: if of the respondent to finally receive the call.
     :param tel_caller: phone number of the user.
     :param audience_id: the id of the audience whoms randomness needs to be biased.
+    :param request: the request the call was initiated by.
     :return: True iff call was successfully dispatched.
     """
+    if is_blocked(request):
+        return False
+
     callback_uri = url_for('.outbound',
                            _external=True,
                            _scheme='https',
@@ -102,6 +108,7 @@ def initiate_call(record_id, tel_caller, audience_id):
         current_app.logger.error(e)
         return False
     current_app.random.add_sample(audience_id=audience_id, respondent_id=record_id)
+    register_ip_address(request)
     return True
 
 

@@ -62,3 +62,12 @@ class PossibleAbuses(db.Model):
     id = db.Column(db.String(64), primary_key=True)
     short_calls = db.Column(db.Integer())
     date = db.Column(db.Date())
+
+
+class BlockedClients(db.Model):
+    """
+    ORM model for ip addresses to block
+    """
+    id = db.Column(db.String(64), primary_key=True)
+    calls = db.Column(db.Integer())
+    date = db.Column(db.Date())
