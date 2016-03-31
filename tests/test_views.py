@@ -7,7 +7,7 @@ class TestViews(RephoneTest):
     def test_index(self):
         with self.client:
             response = self.client.get('/')
-            assert response.status_code == 200
+            assert response.status_code == 303
 
     def test_outbound(self):
         with self.client:
