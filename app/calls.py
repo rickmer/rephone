@@ -76,9 +76,6 @@ def initiate_call(record_id, tel_caller, audience_id, request):
     :param request: the request the call was initiated by.
     :return: True iff call was successfully dispatched.
     """
-    if is_blocked(request):
-        return False
-
     callback_uri = url_for('.outbound',
                            _external=True,
                            _scheme='https',
@@ -108,7 +105,6 @@ def initiate_call(record_id, tel_caller, audience_id, request):
         current_app.logger.error(e)
         return False
     current_app.random.add_sample(audience_id=audience_id, respondent_id=record_id)
-    register_ip_address(request)
     return True
 
 

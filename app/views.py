@@ -1,30 +1,26 @@
-from flask import Blueprint, request, Response
+from flask import Blueprint, request, Response, redirect, abort
 from .calls import make_outbound_call, get_call_widget, post_call_widget
+from .abuse.client import is_blocked
 main = Blueprint('main', __name__)
 
 
-@main.route('/', methods=['GET', 'POST'])
+@main.route('/', methods=['GET'])
 def index():
+    return redirect('/1', 303)
+
+
+@main.route('/<id_campaign>', methods=['GET', 'POST'], defaults={'template': ''})
+@main.route('/<template>/<id_campaign>', methods=['GET', 'POST'])
+def campaign(id_campaign, template):
+    embedded_template = False
+    if template == 'embedded':
+        embedded_template = True
     if request.method == 'GET':
-        return get_call_widget(request)
+        return get_call_widget(request, id_campaign, embedded=embedded_template)
     elif request.method == 'POST':
-        return post_call_widget(request)
-
-
-@main.route('/<id_campaign>', methods=['GET', 'POST'])
-def campaign(id_campaign):
-    if request.method == 'GET':
-        return get_call_widget(request, id_campaign)
-    elif request.method == 'POST':
-        return post_call_widget(request, id_campaign)
-
-
-@main.route('/embedded/<id_campaign>', methods=['GET', 'POST'])
-def embedded_campaign(id_campaign):
-    if request.method == 'GET':
-        return get_call_widget(request, id_campaign, embedded=True)
-    elif request.method == 'POST':
-        return post_call_widget(request, id_campaign, embedded=True)
+        if is_blocked(request):
+            return abort(429)
+        return post_call_widget(request, id_campaign, embedded=embedded_template)
 
 
 @main.route('/outbound/<record_id>', methods=['POST'])
