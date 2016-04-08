@@ -8,7 +8,7 @@
         {% from "_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group %}
         <div class="row">
             <a href="/{{ campaign }}" class="pull-right" style="margin-right: 25px; margin-top: 5px;" target="_parent">CallForDemocracy.org</a>
-            <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign }}">
+            <form id="CallForm" class="form" method="POST" role="form" action="/embedded/{{ campaign }}">
                 {{ form.hidden_tag() }}
                 <div class="well well-lg">
                     <div class="media-object">
