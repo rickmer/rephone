@@ -4,10 +4,11 @@ from hashlib import sha256
 from datetime import date
 
 
-def abuse_detected(phone_number, duration=None):
+def abuse_detected(phone_number, duration=None, persist=False):
     """
     :param phone_number: a phone number to add to the abuse tracker.
     :param duration: the duration of the call.
+    :param persist: iff persist is set to True abuse flag will be set permanently
     :return: true iff abuse is likely
     """
 
@@ -22,14 +23,18 @@ def abuse_detected(phone_number, duration=None):
         abuse_case.id = hashed_phone_number
         abuse_case.short_calls = 0 + short_calls
         abuse_case.date = date.today()
+        abuse_case.persistent = persist
         db.session.add(abuse_case)
     elif abuse_case.date == date.today():
         abuse_case.short_calls += short_calls
     else:
         abuse_case.date = date.today()
         abuse_case.short_calls = short_calls
+    if persist:
+        abuse_case.persistent = True
     db.session.commit()
 
-    if abuse_case.short_calls >= current_app.config['SHORT_CALL_MAX_AMOUNT']:
+    if abuse_case.persistent or \
+       abuse_case.short_calls >= current_app.config['SHORT_CALL_MAX_AMOUNT']:
         return True
     return False

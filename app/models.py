@@ -62,6 +62,7 @@ class PossibleAbuses(db.Model):
     id = db.Column(db.String(64), primary_key=True)
     short_calls = db.Column(db.Integer())
     date = db.Column(db.Date())
+    persistent = db.Column(db.Boolean())
 
 
 class BlockedClients(db.Model):
@@ -71,3 +72,4 @@ class BlockedClients(db.Model):
     id = db.Column(db.String(64), primary_key=True)
     calls = db.Column(db.Integer())
     date = db.Column(db.Date())
+    persistent = db.Column(db.Boolean())

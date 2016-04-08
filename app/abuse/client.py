@@ -8,7 +8,9 @@ def is_blocked(request):
     register_ip_address(request)
     hashed_ip = get_hashed_ip_addr(get_ip_addr(request))
     client = BlockedClients().query.filter_by(id=hashed_ip).first()
-    if client.date == date.today() and client.calls > current_app.config['MAX_CALLS_PER_IP_PER_DAY']:
+    if client.persistent:
+        return True
+    elif client.date == date.today() and client.calls > current_app.config['MAX_CALLS_PER_IP_PER_DAY']:
         return True
     else:
         return False
@@ -32,6 +34,7 @@ def register_ip_address(request):
         client.id = hashed_ip
         client.calls = 1
         client.date = date.today()
+        client.persistent = False
         db.session.add(client)
     elif client.date != date.today():
         client.calls = 1
@@ -39,3 +42,19 @@ def register_ip_address(request):
     else:
         client.calls += 1
     db.session.commit()
+
+
+def block_ip(ip):
+    hashed_ip = get_hashed_ip_addr(ip)
+    client = BlockedClients().query.filter_by(id=hashed_ip).first()
+    if client is None:
+        client = BlockedClients()
+        client.id = hashed_ip
+        client.calls = 1
+        client.date = date.today()
+        client.persistent = True
+        db.session.add(client)
+    else:
+        client.persistent = True
+    db.session.commit()
+
