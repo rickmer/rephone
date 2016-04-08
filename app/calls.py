@@ -121,9 +121,8 @@ def make_outbound_call(record_id):
     if record is None:
         return abort(404)
 
-    response.say("Hallo! Wir verbinden Dich jetzt. Danke für Deine Zeit.",
-                 voice='alice',
-                 language='de')
+    response.say("Hello, thanks for your Participation. We will now connect you to your Member of Parliament.",
+                 voice='alice')
 
     if current_app.config['demo_mode']:
         response.hangup()
