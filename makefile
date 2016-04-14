@@ -5,4 +5,4 @@ install:
 	virtualenv --python=python3 .
 	bin/pip3 install -r requirements.txt
 	sqlite3 app/db.sqlite < init_db.sql
-	./run.py --generate_captcha
+	bin/python3 run.py --generate_captcha
