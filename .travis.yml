@@ -5,7 +5,7 @@ branches:
 python:
   - "3.4"
 before_install:
-  - sudo bash apt.list
+  - sudo apt-get install sqlite3
   - sqlite3 app/db.sqlite < init_db.sql
 install:
   - pip3 install -r requirements.txt
