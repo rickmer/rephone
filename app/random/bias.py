@@ -7,7 +7,7 @@ class BiasedRandomValue(object):
 
     def __init__(self):
         self.list_of_vectors = []
-        audiences = Audience().query.all()
+        audiences = sorted(Audience().query.all(), key=attrgetter('id'))
         for audience in audiences:
             vector = []
             biases = sorted(RandomBias().query.filter_by(id_audience=audience.id).all(), key=attrgetter('vector_index'))
