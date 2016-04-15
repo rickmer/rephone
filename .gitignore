@@ -1,6 +1,8 @@
 .cache
 .idea/
 __pycache__
+app/db.sqlite
+tests/test_db.sqlite
 lib
 bin
 include

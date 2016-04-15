@@ -1,5 +1,8 @@
 test:
+	rm -f tests/test_db.sqlite
+	sqlite3 tests/test_db.sqlite < init_db.sql
 	py.test tests/
+
 install:
 	sudo bash apt.list
 	virtualenv --python=python3 .
