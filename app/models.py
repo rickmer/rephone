@@ -73,3 +73,13 @@ class BlockedClients(db.Model):
     calls = db.Column(db.Integer())
     date = db.Column(db.Date())
     persistent = db.Column(db.Boolean())
+
+
+class CallStatistics(db.Model):
+    """
+    ORM model for call statistics
+    """
+    id = db.Column(db.Integer(), primary_key=True)
+    time = db.Column(db.DateTime())
+    typ = db.Column(db.String(12))
+    data = db.Column(db.Integer())
