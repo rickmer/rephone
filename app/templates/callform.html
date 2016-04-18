@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 	{% block content %}
-        {% from "_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group %}
+        {% from "_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group, render_call_time %}
         <div class="row">
             <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign }}">
                 {{ form.hidden_tag() }}

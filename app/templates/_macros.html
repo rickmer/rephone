@@ -143,3 +143,14 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro render_call_time(actual_minutes_called, minutes_campaign_goal) %}
+<div class="progress">
+  <div class="progress-bar progress-bar-info" style="width: {{ ((actual_minutes_called / minutes_campaign_goal) * 100) }}%">
+    <span class="sr-only">{{ actual_minutes_called }} minutes talked already during this campaign</span> {{ actual_minutes_called }} minutes talked already during this campaign.
+  </div>
+  <div class="progress-bar progress-bar-warning" style="width: {{ (100 - ((actual_minutes_called / minutes_campaign_goal) * 100))    }}%">
+    <span class="sr-only">{{ (minutes_campaign_goal - actual_minutes_called) }} Minutes still to go for the campaign goal to be reached.</span> {{ (minutes_campaign_goal - actual_minutes_called) }} Minutes still to go for the campaign goal to be reached.
+  </div>
+</div>
+{% endmacro %}
