@@ -4,11 +4,13 @@ CREATE TABLE campaign (
 	id INTEGER NOT NULL, 
 	name VARCHAR(128), 
 	description VARCHAR(1024), 
-	id_audience INTEGER, 
+	id_audience INTEGER,
+	target_minutes INTEGER,
+	minutes_talked INTEGER,
 	PRIMARY KEY (id)
 );
-INSERT INTO "campaign" VALUES(1,'Stop TTIP','',1);
-INSERT INTO "campaign" VALUES(2,'Stop TTIP','',2);
+INSERT INTO "campaign" VALUES(1,'Stop TTIP','',1, 300, 0);
+INSERT INTO "campaign" VALUES(2,'Stop TTIP','',2, 300, 0);
 
 CREATE TABLE respondent (
 	id INTEGER NOT NULL, 

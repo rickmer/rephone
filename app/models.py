@@ -31,6 +31,8 @@ class Campaign(db.Model):
     name = db.Column(db.String(128))
     description = db.Column(db.String(1024))
     id_audience = db.Column(db.Integer)
+    target_minutes = db.Column(db.Integer())
+    minutes_talked = db.Column(db.Integer())
 
 
 class Audience(db.Model):

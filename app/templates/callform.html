@@ -2,9 +2,10 @@
 	{% block content %}
         {% from "_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group, render_call_time %}
         <div class="row">
-            <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign }}">
+            <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign.id }}">
                 {{ form.hidden_tag() }}
                 <div class="well well-lg">
+                    {{ render_call_time(campaign.minutes_talked, campaign.target_minutes) }}
                     <div class="media-object">
                         <div class="media-left hidden-xs">
                             <img class="img-thumbnail visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" style="width: 200px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
@@ -16,9 +17,9 @@
                             {{ render_info_bulletin(record) }}
                             {{ render_phone_input_group(form, record) }}
                             {{ render_captcha(form, captcha_activated)}}
-                            <a href="/{{ campaign }}" class="btn btn-block btn-info visible-xs-block">jemand anderen anrufen ...</a>
+                            <a href="/{{ campaign.id }}" class="btn btn-block btn-info visible-xs-block">jemand anderen anrufen ...</a>
                             <button id="CallButton" class="btn btn-block btn-primary visible-xs-block">Anrufen!</button>
-                            <a href="/{{ campaign }}" class="btn btn-info visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">jemand anderen anrufen ...</a>
+                            <a href="/{{ campaign.id }}" class="btn btn-info visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">jemand anderen anrufen ...</a>
                             <button id="CallButton" class="btn btn-primary visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">Anrufen!</button>
                         </div>
                     </div>

@@ -29,20 +29,20 @@ def post_call_widget(request, id_campaign=1, embedded=False):
         tel_caller = form.phone_number.data
         if abuse_detected(phone_number=tel_caller):
             flash('I’m sorry Dave, I’m afraid I can’t do that.', category='warning')
-            return render_template(template, record=record, form=form, campaign=id_campaign)
+            return render_template(template, record=record, form=form, campaign=campaign)
         if not initiate_call(record_id=form.id_mdb.data,
                              tel_caller=tel_caller,
                              audience_id=campaign.id_audience,
                              campaign_id=id_campaign,
                              request=request):
             flash('something went wrong', category='warning')
-            return render_template(template, record=record, form=form, campaign=id_campaign)
+            return render_template(template, record=record, form=form, campaign=campaign)
         else:
             flash('dispatching call from ' + tel_caller + ' to ' + tel_mdb, category='info')
-            return render_template(template, record=record, form=form, campaign=id_campaign)
+            return render_template(template, record=record, form=form, campaign=campaign)
     else:
         record = Respondent().query.filter_by(id=form.id_mdb.data).first()
-        return render_template(template, record=record, form=form, campaign=id_campaign)
+        return render_template(template, record=record, form=form, campaign=campaign)
 
 
 def get_call_widget(request, id_campaign=1, embedded=False):
@@ -64,7 +64,7 @@ def get_call_widget(request, id_campaign=1, embedded=False):
     audience = Audience().query.filter_by(id=campaign.id_audience).first()
     random_id = current_app.random.get_random_value(campaign.id_audience)
     record = sorted(audience.respondents, key=attrgetter('id'))[random_id]
-    return render_template(template, record=record, form=form, campaign=id_campaign)
+    return render_template(template, record=record, form=form, campaign=campaign)
 
 
 def initiate_call(record_id, tel_caller, audience_id, campaign_id):
