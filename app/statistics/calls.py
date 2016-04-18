@@ -2,13 +2,14 @@ from app.models import db, CallStatistics
 from datetime import datetime
 
 
-def log_call(duration):
-    call_time = CallStatistics(time=datetime.now(),
-                               typ='seconds',
-                               data=int(duration))
-    call_event = CallStatistics(time=datetime.now(),
-                                typ='call',
-                                data=1)
-    db.session.add(call_time)
-    db.session.add(call_event)
+def log_call(call_duration, id_campaign):
+    """
+    log call statistics
+    :param call_duration: duration on the call in seconds
+    :param id_campaign: id of the campaign
+    """
+    call = CallStatistics(time=datetime.now(),
+                          duration=int(call_duration),
+                          campaign=int(id_campaign))
+    db.session.add(call)
     db.session.commit()

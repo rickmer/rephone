@@ -81,5 +81,5 @@ class CallStatistics(db.Model):
     """
     id = db.Column(db.Integer(), primary_key=True)
     time = db.Column(db.DateTime())
-    typ = db.Column(db.String(12))
-    data = db.Column(db.Integer())
+    campaign = db.Column(db.Integer())
+    duration = db.Column(db.Integer())

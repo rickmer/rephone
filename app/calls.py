@@ -2,7 +2,6 @@ from flask import render_template, flash, url_for, current_app, abort
 from .models import Respondent, Campaign, Audience
 from .forms import CallForm
 from .abuse.calls import abuse_detected
-from .abuse.client import register_ip_address, is_blocked
 from twilio import twiml
 from twilio.rest import TwilioRestClient
 from operator import attrgetter
@@ -34,6 +33,7 @@ def post_call_widget(request, id_campaign=1, embedded=False):
         if not initiate_call(record_id=form.id_mdb.data,
                              tel_caller=tel_caller,
                              audience_id=campaign.id_audience,
+                             campaign_id=id_campaign,
                              request=request):
             flash('something went wrong', category='warning')
             return render_template(template, record=record, form=form, campaign=id_campaign)
@@ -67,13 +67,13 @@ def get_call_widget(request, id_campaign=1, embedded=False):
     return render_template(template, record=record, form=form, campaign=id_campaign)
 
 
-def initiate_call(record_id, tel_caller, audience_id, request):
+def initiate_call(record_id, tel_caller, audience_id, campaign_id):
     """
     Dispatch a call to the user provided Phone number.
     :param record_id: if of the respondent to finally receive the call.
     :param tel_caller: phone number of the user.
     :param audience_id: the id of the audience whoms randomness needs to be biased.
-    :param request: the request the call was initiated by.
+    :param campaign_id: the id of the campaign to log statistics for.
     :return: True iff call was successfully dispatched.
     """
     callback_uri = url_for('.outbound',
@@ -83,7 +83,8 @@ def initiate_call(record_id, tel_caller, audience_id, request):
 
     status_uri = url_for('.status',
                          _external=True,
-                         _scheme='https')
+                         _scheme='https',
+                         id_campaign=str(campaign_id))
 
     try:
         twilio_client = TwilioRestClient(current_app.config['TWILIO_ACCOUNT_SID'],

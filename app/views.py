@@ -28,9 +28,12 @@ def outbound(record_id):
     return make_outbound_call(record_id)
 
 
-@main.route('/outbound/status/', methods=['POST'])
-def status():
+@main.route('/outbound/status/<id_campaign>', methods=['POST'])
+def status(id_campaign):
     from .abuse.calls import abuse_detected
+    from .statistics.calls import log_call
     abuse_detected(phone_number=request.values['To'],
                    duration=request.values['CallDuration'])
+    log_call(call_duration=request.values['CallDuration'],
+             id_campaign=id_campaign)
     return Response(status=200)
