@@ -1,18 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-{% from "_macros.html" import render_head %}
-    <head>
-        {{ render_head(captcha_activated) }}
-    </head>
-    <body>
-        {% from "_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group %}
+{% extends "index.html" %}
+	{% block content %}
+        {% from "callform/_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group, render_call_time %}
         <div class="row">
-            <a href="/{{ campaign.id }}" class="pull-right" style="margin-right: 25px; margin-top: 5px;" target="_parent">CallForDemocracy.org</a>
-            <form id="CallForm" class="form" method="POST" role="form" action="/embedded/{{ campaign.id }}">
+            <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign.id }}">
                 {{ form.hidden_tag() }}
                 <div class="well well-lg">
+                    {{ render_call_time(campaign.minutes_talked, campaign.target_minutes) }}
                     <div class="media-object">
-                        <div class="media-left">
+                        <div class="media-left hidden-xs">
                             <img class="img-thumbnail visible-sm-inline-block visible-md-inline-block visible-lg-inline-block" style="width: 200px;" src="{{ url_for('static', filename='images/'+ record.image) }}">
                             <div class="small visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">{{ record.license}}</div>
                         </div>
@@ -22,14 +17,13 @@
                             {{ render_info_bulletin(record) }}
                             {{ render_phone_input_group(form, record) }}
                             {{ render_captcha(form, captcha_activated)}}
-                            <a href="/embedded/{{ campaign.id }}" class="btn btn-block btn-info visible-xs-block">jemand anderen anrufen ...</a>
+                            <a href="/{{ campaign.id }}" class="btn btn-block btn-info visible-xs-block">jemand anderen anrufen ...</a>
                             <button id="CallButton" class="btn btn-block btn-primary visible-xs-block">Anrufen!</button>
-                            <a href="/embedded/{{ campaign.id }}" class="btn btn-info visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">jemand anderen anrufen ...</a>
+                            <a href="/{{ campaign.id }}" class="btn btn-info visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">jemand anderen anrufen ...</a>
                             <button id="CallButton" class="btn btn-primary visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">Anrufen!</button>
                         </div>
                     </div>
                 </div>
             </form>
         </div>
-    </body>
-</html>
+    {% endblock %}

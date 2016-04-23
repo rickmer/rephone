@@ -1,1 +1,7 @@
 SECRET_KEY = 'super-secret'
+SECURITY_EMAIL_SENDER = 'no_reply@rickmer.org'
+SECURITY_PASSWORD_HASH = 'pbkdf2_sha512'
+SECURITY_PASSWORD_SALT = 'diese_salt_muss_geaendert_werden'
+SECURITY_REGISTERABLE = True
+SECURITY_CONFIRMABLE = True
+SECURITY_RECOVERABLE = True

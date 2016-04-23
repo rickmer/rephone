@@ -1,6 +1,12 @@
 from flask import Flask
-from .models import db
+from .models import db, user_data_store
+from .forms import RegisterForm
 from flask.ext.captcha import Captcha
+from flask.ext.mail import Mail
+from flask.ext.security import Security
+
+mail = Mail()
+security = Security()
 
 
 def create_app(config_override=None, config_file=None):
@@ -15,6 +21,7 @@ def create_app(config_override=None, config_file=None):
     app.config.from_object('app.config.captcha')
     app.config.from_object('app.config.impressum')
     app.config.from_object('app.config.abuse')
+    app.config.from_object('app.config.smtp')
     if config_override:
         for key in config_override:
             app.config[key] = config_override[key]
@@ -30,6 +37,9 @@ def create_app(config_override=None, config_file=None):
     db.create_all(app=app)
     # register blueprints
     app.register_blueprint(main_blueprint)
+
+    mail.init_app(app=app)
+    security.init_app(app=app, datastore=user_data_store, confirm_register_form=RegisterForm)
 
     @app.context_processor
     def inject_into_jinja_templates():

@@ -20,9 +20,9 @@ def post_call_widget(request, id_campaign=1, embedded=False):
     if campaign is None:
         return abort(404)
     if embedded:
-        template = 'callform_embedded.html'
+        template = 'callform/callform_embedded.html'
     else:
-        template = 'callform.html'
+        template = 'callform/callform.html'
     if form.validate_on_submit():
         record = Respondent().query.filter_by(id=form.id_mdb.data).first()
         tel_mdb = record.phone
@@ -58,9 +58,9 @@ def get_call_widget(request, id_campaign=1, embedded=False):
     if campaign is None:
         return abort(404)
     if embedded:
-        template = 'callform_embedded.html'
+        template = 'callform/callform_embedded.html'
     else:
-        template = 'callform.html'
+        template = 'callform/callform.html'
     audience = Audience().query.filter_by(id=campaign.id_audience).first()
     random_id = current_app.random.get_random_value(campaign.id_audience)
     record = sorted(audience.respondents, key=attrgetter('id'))[random_id]

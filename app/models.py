@@ -1,8 +1,23 @@
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.security import UserMixin, RoleMixin, SQLAlchemyUserDatastore
 db = SQLAlchemy()
+
+
 audience_respondent = db.Table('audience_respondent',
-                               db.Column('id_audience', db.Integer(), db.ForeignKey('audience.id')),
-                               db.Column('id_respondent', db.Integer(), db.ForeignKey('respondent.id')))
+                               db.Column('id_audience',
+                                         db.Integer(),
+                                         db.ForeignKey('audience.id')),
+                               db.Column('id_respondent',
+                                         db.Integer(),
+                                         db.ForeignKey('respondent.id')))
+
+roles_users = db.Table('roles_users',
+                       db.Column('user_id',
+                                 db.Integer(),
+                                 db.ForeignKey('user.id')),
+                       db.Column('role_id',
+                                 db.Integer(),
+                                 db.ForeignKey('role.id')))
 
 
 class Respondent(db.Model):
@@ -85,3 +100,31 @@ class CallStatistics(db.Model):
     time = db.Column(db.DateTime())
     campaign = db.Column(db.Integer())
     duration = db.Column(db.Integer())
+
+
+class Role(db.Model, RoleMixin):
+    """
+    ORM model in role object
+    """
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+    description = db.Column(db.String(255))
+
+
+class User(db.Model, UserMixin):
+    """
+    ORM model user object
+    """
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True)
+    username = db.Column(db.String(64))
+    password = db.Column(db.String(255))
+    active = db.Column(db.Boolean())
+    confirmed_at = db.Column(db.DateTime())
+    roles = db.relationship('Role', secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
+
+    def __repr__(self):
+        return '<User id=%s email=%s>' % (self.id, self.email)
+
+user_data_store = SQLAlchemyUserDatastore(db=db, role_model=Role, user_model=User)

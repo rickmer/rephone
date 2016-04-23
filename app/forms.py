@@ -3,6 +3,7 @@ from flask.ext.wtf import Form
 from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Length
 from flask.ext.captcha.models import CaptchaStore
+from flask_security import ConfirmRegisterForm
 
 
 class CallForm(Form):
@@ -33,3 +34,7 @@ class CallForm(Form):
 
         self.phone_number.data = PhoneNumber(self.phone_number).get_e164_format()
         return True
+
+
+class RegisterForm(ConfirmRegisterForm):
+    username = StringField('Username', validators=[DataRequired()])
