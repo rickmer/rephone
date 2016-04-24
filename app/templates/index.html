@@ -24,8 +24,16 @@
                     <div class="collapse navbar-collapse navbar-right" id="mymenu">
                         <ul class="nav navbar-nav">
                             <li>
+                                {% if not current_user.is_authenticated %}
+                                    <a href="{{ url_for_security('login') }}">Login</a>
+                                {% else %}
+                                    <a href="{{ url_for_security('logout') }}">Logout {{ current_user.username }}</a>
+                                {% endif %}
+                            </li>
+                            <li>
                                 {{ render_impressum_trigger() }}
                             </li>
+
                         </ul>
                     </div>
                 </div>
