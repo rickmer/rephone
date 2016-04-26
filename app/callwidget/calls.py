@@ -1,7 +1,7 @@
 from flask import render_template, flash, url_for, current_app, abort
-from .models import Respondent, Campaign, Audience
-from .forms import CallForm
-from .abuse.calls import abuse_detected
+from app.models import Respondent, Campaign, Audience
+from app.forms import CallForm
+from app.abuse.calls import abuse_detected
 from twilio import twiml
 from twilio.rest import TwilioRestClient
 from operator import attrgetter
@@ -33,8 +33,7 @@ def post_call_widget(request, id_campaign=1, embedded=False):
         if not initiate_call(record_id=form.id_mdb.data,
                              tel_caller=tel_caller,
                              audience_id=campaign.id_audience,
-                             campaign_id=id_campaign,
-                             request=request):
+                             campaign_id=id_campaign):
             flash('something went wrong', category='warning')
             return render_template(template, record=record, form=form, campaign=campaign)
         else:
