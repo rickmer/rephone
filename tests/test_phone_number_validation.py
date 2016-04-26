@@ -1,4 +1,4 @@
-from app.phone_number import PhoneNumber
+from app.callwidget.phone_number import PhoneNumber
 
 
 def test_ill_number_1():

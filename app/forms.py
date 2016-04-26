@@ -1,9 +1,9 @@
 from flask import current_app
+from flask.ext.captcha.models import CaptchaStore
 from flask.ext.wtf import Form
+from flask_security import ConfirmRegisterForm
 from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Length
-from flask.ext.captcha.models import CaptchaStore
-from flask_security import ConfirmRegisterForm
 
 
 class CallForm(Form):
@@ -19,7 +19,7 @@ class CallForm(Form):
         super(CallForm, self).__init__(*args, **kwargs)
 
     def validate(self):
-        from .phone_number import PhoneNumber
+        from app.callwidget.phone_number import PhoneNumber
         initial_validation = super(CallForm, self).validate()
         if not initial_validation:
             return False
