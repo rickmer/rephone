@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% block content %}
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span style="font-variant-caps: all-petite-caps;">{{ current_user.username }}s Campiagns</span>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th width="5%">Id</th>
+                    <th>Title</th>
+                    <th>Audience</th>
+                    <th>Target Minutes</th>
+                    <th>Minutes Talked</th>
+                    <th width="5%">edit</th>
+                </tr>
+            </thead>
+            {% for campaign in campaigns %}
+                <tr>
+                    <td><a href="/{{ campaign.id }}">{{ campaign.id }}</a></td>
+                    <td>{{ campaign.name }}</td>
+                    <td>{{ campaign.id_audience.name }}</td>
+                    <td>{{ campaign.target_minutes }}</td>
+                    <td>{{ campaign.minutes_talked }}</td>
+                    <td><a href="/campaign/edit/{{ campaign.id }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+{% endblock %}

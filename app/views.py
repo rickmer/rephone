@@ -1,5 +1,6 @@
 from app.callwidget.calls import make_outbound_call, get_call_widget, post_call_widget
 from flask import Blueprint, request, Response, redirect, abort
+from flask.ext.login import login_required
 from .abuse.client import is_blocked
 
 main = Blueprint('main', __name__)
@@ -38,3 +39,10 @@ def status(id_campaign):
     log_call(call_duration=request.values['CallDuration'],
              id_campaign=id_campaign)
     return Response(status=200)
+
+
+@login_required
+@main.route('/campaigns', methods=['GET'])
+def campaign_overview():
+    from .frontend.campaign import overview
+    return overview()
