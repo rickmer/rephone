@@ -46,3 +46,10 @@ def status(id_campaign):
 def campaign_overview():
     from .frontend.campaign import overview
     return overview()
+
+
+@login_required
+@main.route('/campaign/edit/<id_campaign>', methods=['GET', 'POST', 'DELETE'])
+def campaign_edit(id_campaign):
+    from .frontend.campaign import edit
+    return edit(id_campaign=id_campaign, request=request)

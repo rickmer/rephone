@@ -13,7 +13,7 @@
                     <th>Audience</th>
                     <th>Target Minutes</th>
                     <th>Minutes Talked</th>
-                    <th width="5%">edit</th>
+                    <th width="5%"><span class="glyphicon glyphicon-edit"></span></th>
                 </tr>
             </thead>
             {% for campaign in campaigns %}
@@ -23,7 +23,7 @@
                     <td>{{ campaign.id_audience.name }}</td>
                     <td>{{ campaign.target_minutes }}</td>
                     <td>{{ campaign.minutes_talked }}</td>
-                    <td><a href="/campaign/edit/{{ campaign.id }}"><span class="glyphicon glyphicon-wrench"></span></a></td>
+                    <td><a href="/campaign/edit/{{ campaign.id }}"><span class="glyphicon glyphicon-edit"></span></a></td>
                 </tr>
             {% endfor %}
         </table>

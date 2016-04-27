@@ -38,3 +38,23 @@ class CallForm(Form):
 
 class RegisterForm(ConfirmRegisterForm):
     username = StringField('Username', validators=[DataRequired()])
+
+
+class CampaignForm(Form):
+    """
+    WTForm to handle Campaign Edit view
+    """
+    id = IntegerField(label='Campaign ID')
+    name = StringField(label='Campaign name')
+    description = StringField(label='Description')
+    id_audience = IntegerField(label='Audience')
+    target_minutes = IntegerField(label='Campaigns Target Minutes')
+
+    def __init__(self, *args, **kwargs):
+        super(CampaignForm, self).__init__(*args, **kwargs)
+
+    def validate(self):
+        if not super(CampaignForm, self).validate():
+            return False
+        else:
+            return True
