@@ -1,4 +1,4 @@
-from flask import render_template, abort, flash
+from flask import render_template, abort, flash, redirect, url_for
 from flask.ext.login import current_user
 from app.models import Campaign, Audience, db
 from app.forms import CampaignForm
@@ -56,3 +56,27 @@ def edit(id_campaign, request):
         else:
             return abort(403)
 
+
+def add(request):
+    """
+    handle add campaign requests
+    :param request: http request
+    :return: http response
+    """
+    form = CampaignForm(request.form)
+    audiences = Audience().query.all()
+    if request.method == 'GET':
+        return render_template('frontend/campaign_add.html', form=form, audiences=audiences)
+    elif request.method == 'POST':
+        if form.validate_on_submit():
+            campaign = Campaign()
+            campaign.name = form.name.data
+            campaign.description = form.description.data
+            campaign.target_minutes = form.target_minutes.data
+            campaign.id_audience = form.id_audience.data
+            campaign.id_owner = current_user.id
+            campaign.minutes_talked = 0
+            db.session.add(campaign)
+            db.session.commit()
+            return redirect('/campaigns', 302)
+        return render_template('frontend/campaign_add.html', form=form, audiences=audiences)

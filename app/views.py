@@ -53,3 +53,10 @@ def campaign_overview():
 def campaign_edit(id_campaign):
     from .frontend.campaign import edit
     return edit(id_campaign=id_campaign, request=request)
+
+
+@login_required
+@main.route('/campaign/add', methods=['GET', 'POST'])
+def campaign_add():
+    from .frontend.campaign import add
+    return add(request=request)

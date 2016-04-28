@@ -44,11 +44,11 @@ class CampaignForm(Form):
     """
     WTForm to handle Campaign Edit view
     """
-    id = IntegerField(label='Campaign ID', validators=[DataRequired()])
-    name = StringField(label='Campaign name')
+    id = IntegerField(label='Campaign ID')
+    name = StringField(label='Campaign name', validators=[DataRequired()])
     description = StringField(label='Description')
-    id_audience = IntegerField(label='Audience')
-    target_minutes = IntegerField(label='Campaigns Target Minutes')
+    id_audience = IntegerField(label='Audience', validators=[DataRequired()])
+    target_minutes = IntegerField(label='Campaigns Target Minutes', validators=[DataRequired()])
 
     def __init__(self, *args, **kwargs):
         super(CampaignForm, self).__init__(*args, **kwargs)

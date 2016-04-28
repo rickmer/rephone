@@ -3,9 +3,9 @@
 {% from "security/_macros.html" import render_field_with_errors %}
 <div class="row">
     <div class="well well-lg">
-        <h4>Edit Campaign</h4><hr>
-        <form id="campaign_edit_form" action="/campaign/edit/{{ form.id.data }}" method="POST">
-            {{ render_field_with_errors(form.id, readonly=yes) }}
+        <h4>Add Campaign</h4><hr>
+        <form id="campaign_add_form" action="/campaign/add" method="POST">
+            {{ form.hidden_tag() }}
             {{ render_field_with_errors(form.name) }}
             {{ render_field_with_errors(form.description) }}
             {{ render_field_with_errors(form.target_minutes) }}
@@ -19,18 +19,12 @@
                     {% endfor %}
                 </select>
             </div>
-
         </form>
         <button class="btn btn-info" onclick="window.location.href='/campaigns';">
             <span class="glyphicon glyphicon-arrow-left"></span>
         </button>
-        <button class="btn btn-primary" onclick="$('#campaign_edit_form').submit();">
+        <button class="btn btn-primary" onclick="$('#campaign_add_form').submit();">
             <span class="glyphicon glyphicon-floppy-disk"></span>
-        </button>
-        <button class="btn btn-danger" onclick="$.ajax({url: '/campaign/edit/{{ form.id.data }}',
-                                                        type: 'DELETE',
-                                                        success: function() { window.location.href='/campaigns'; }});">
-            <span class="glyphicon glyphicon-trash"></span>
         </button>
     </div>
 </div>
