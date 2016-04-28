@@ -44,7 +44,7 @@ class CampaignForm(Form):
     """
     WTForm to handle Campaign Edit view
     """
-    id = IntegerField(label='Campaign ID')
+    id = IntegerField(label='Campaign ID', validators=[DataRequired()])
     name = StringField(label='Campaign name')
     description = StringField(label='Description')
     id_audience = IntegerField(label='Audience')
@@ -52,9 +52,3 @@ class CampaignForm(Form):
 
     def __init__(self, *args, **kwargs):
         super(CampaignForm, self).__init__(*args, **kwargs)
-
-    def validate(self):
-        if not super(CampaignForm, self).validate():
-            return False
-        else:
-            return True

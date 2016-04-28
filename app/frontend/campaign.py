@@ -1,4 +1,4 @@
-from flask import render_template, abort
+from flask import render_template, abort, flash
 from flask.ext.login import current_user
 from app.models import Campaign, Audience, db
 from app.forms import CampaignForm
@@ -27,16 +27,27 @@ def edit(id_campaign, request):
     if campaign is None:
         return abort(404)
     form = CampaignForm(request.form)
-    form.id.data = campaign.id
-    form.description.data = campaign.description
-    form.name.data = campaign.name
-    form.target_minutes.data = campaign.target_minutes
-    form.id_audience.data = campaign.id_audience
     audiences = Audience().query.all()
     if request.method == 'GET':
+        form.id.data = campaign.id
+        form.description.data = campaign.description
+        form.name.data = campaign.name
+        form.target_minutes.data = campaign.target_minutes
+        form.id_audience.data = campaign.id_audience
         return render_template('frontend/campaign_edit.html', form=form, audiences=audiences)
     elif request.method == 'POST':
-        return abort(403)
+        print(form.validate_on_submit())
+        if form.validate_on_submit():
+            campaign.id_audience = form.id_audience.data
+            campaign.name = form.name.data
+            campaign.description = form.description.data
+            campaign.target_minutes = form.target_minutes.data
+            db.session.commit()
+            flash('Saved!', category='success')
+            return render_template('frontend/campaign_edit.html', form=form, audiences=audiences)
+        else:
+            flash('Not Saved!', category='warning')
+            return render_template('frontend/campaign_edit.html', form=form, audiences=audiences)
     elif request.method == 'DELETE':
         if current_user.id == campaign.id_owner:
             db.session.delete(campaign)
