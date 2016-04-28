@@ -4,7 +4,6 @@
     <div class="panel panel-default">
         <div class="panel-heading">
             <span style="font-variant-caps: all-petite-caps;">{{ current_user.username }}s Campiagns</span>
-            <a href="/campaign/add"><span class="pull-right glyphicon glyphicon-plus-sign"></span></a>
         </div>
         <table class="table">
             <thead>
@@ -14,7 +13,11 @@
                     <th>Audience</th>
                     <th>Target Minutes</th>
                     <th>Minutes Talked</th>
-                    <th width="5%"><span class="glyphicon glyphicon-edit"></span></th>
+                    <th width="5%">
+                        <a href="/campaign/add">
+                            <span class="glyphicon glyphicon-plus-sign"></span>
+                        </a>
+                    </th>
                 </tr>
             </thead>
             {% for campaign in campaigns %}

@@ -28,9 +28,9 @@
                             </li>
                             <li>
                                 {% if not current_user.is_authenticated %}
-                                    <a href="{{ url_for_security('login') }}?next=campaigns"><span class="glyphicon glyphicon-cog"></span></a>
+                                    <a href="{{ url_for_security('login') }}?next=campaigns"><span class="glyphicon glyphicon-log-in"></span></a>
                                 {% else %}
-                                    <a href="{{ url_for_security('logout') }}"><span class="glyphicon glyphicon-off"></span></a>
+                                    <a href="{{ url_for_security('logout') }}"><span class="glyphicon glyphicon-log-out"></span></a>
                                 {% endif %}
                             </li>
                         </ul>
