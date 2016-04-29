@@ -1,13 +1,18 @@
-{% macro render_head(captcha_activated) %}
+{% macro render_head(captcha_activated, social_activated) %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/octocat.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap-theme.min.css') }}">
 <script src="{{ url_for('static', filename='jquery/jquery-2.1.4.min.js') }}"></script>
 <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.min.js') }}"></script>
+{% if social_activated %}
+<script type="text/javascript" src="{{ url_for('static', filename='socialshareprivacy/jquery.socialshareprivacy.min.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='js/socialshareprivacy.js') }}"></script>
+<script type="application/javascript">$(document).ready(function () { load_share_buttons(); });</script>
+{% endif %}
 {% if captcha_activated %}
 <script src="{{ url_for('static', filename='js/captcha.js') }}"></script>
-<script type="application/javascript">$(document).ready(function () {refresh_captcha();})</script>
+<script type="application/javascript">$(document).ready(function () { refresh_captcha(); });</script>
 {% endif %}
 {% endmacro%}
 

@@ -22,6 +22,7 @@ def create_app(config_override=None, config_file=None):
     app.config.from_object('app.config.impressum')
     app.config.from_object('app.config.abuse')
     app.config.from_object('app.config.smtp')
+    app.config.from_object('app.config.social')
     if config_override:
         for key in config_override:
             app.config[key] = config_override[key]
@@ -44,6 +45,7 @@ def create_app(config_override=None, config_file=None):
     @app.context_processor
     def inject_into_jinja_templates():
         return dict(captcha_activated=app.config['CAPTCHA_ACTIVATED'],
+                    social_activated=app.config['SOCIAL_ACTIVATED'],
                     impressum=app.config['IMPRESSUM'])
     # initialize biased pseudo random distribution
     with app.app_context():

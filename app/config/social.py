@@ -1,0 +1,1 @@
+SOCIAL_ACTIVATED = True
