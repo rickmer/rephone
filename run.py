@@ -5,8 +5,11 @@ from flask.ext.captcha.helpers import init_captcha_dir, generate_images
 from app.abuse.client import block_ip
 from app.abuse.calls import abuse_detected
 from os.path import isfile
+from subprocess import run
 
 if __name__ == '__main__':
+    #starting varnish webcache
+    run(["service", "varnish", "restart"])
     # handling command line arguments
     argparser = ArgumentParser(description='rephone - a free telephone call/callback system.')
     argparser.add_argument('--debug', action='store_true', help="Run with Interactive Debugger")
