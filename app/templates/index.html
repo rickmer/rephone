@@ -5,9 +5,6 @@
     {{ render_head(captcha_activated, social_activated) }}
 </head>
 <body>
-<a class="visible-sm visible-md visible-lg" href="https://github.com/rickmer/rephone">
-    <img id="octocat" src="{{ url_for('static', filename='assets/forkme.png') }}" alt="Fork me on GitHub">
-</a>
     <div class="container col-lg-10 col-lg-offset-1 col-md-10 col-md-offset-1 col-sm-10 col-sm-offset-1">
         <div class="row" style="padding-top: 10px;">
             <nav class="navbar navbar-default" role="navigation">
@@ -57,7 +54,15 @@
                     </button>
                     {% if social_activated %}
                     <div class="collapse navbar-collapse navbar-left" id="social_buttons">
-                        <div id="socialshareprivacy"></div>
+                        <ul class="nav navbar-nav">
+                            <li>
+                                <a id="github_link" href="https://github.com/rickmer/rephone"><img id="github_icon" width="24" height="24" src="{{ url_for('static', filename='assets/GitHub-Mark.png') }}"><small>Fork me!</small></a>
+                            </li>
+                            <li>
+                                <div id="socialshareprivacy"></div>
+                            </li>
+                        </ul>
+
                     </div>
                     {% endif %}
                     <div class="collapse navbar-collapse navbar-right" id="footer">

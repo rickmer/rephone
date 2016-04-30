@@ -58,14 +58,14 @@
 }
 /* Facebook begin */
 .social_share_privacy_area .facebook {
-    width: 180px;
+    min-width: 100px;
     display: inline-block;
 }
 .social_share_privacy_area.vertical .facebook {
     display: block;
 }
 .social_share_privacy_area .facebook .fb_like iframe {
-    width: 130px;
+    min-width: 120px;
 }
 /* Facebook end */
 /* Twitter begin */
@@ -331,3 +331,12 @@
             border-radius: 0 5px 0 0;
 }
 /* Settings/Info end */
+
+#github_link {
+    display: inline-flex;
+    margin-left: -20px;
+}
+
+#github_icon {
+    margin-right: 5px;
+}
