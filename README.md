@@ -6,6 +6,7 @@ Free telephone call/callback system.
 [![Build Status](https://travis-ci.org/rickmer/rephone.svg?branch=master)](https://travis-ci.org/rickmer/rephone)
 [![Code Climate](https://codeclimate.com/github/rickmer/rephone/badges/gpa.svg)](https://codeclimate.com/github/rickmer/rephone)
 [![Stories in Ready](https://badge.waffle.io/rickmer/rephone.png?label=ready&title=Ready)](https://waffle.io/rickmer/rephone)
+[![Dependency Status](https://www.versioneye.com/user/projects/5725e5e1ba37ce004309f8b0/badge.svg)](https://www.versioneye.com/user/projects/5725e5e1ba37ce004309f8b0)
 
 
 ## Project description
