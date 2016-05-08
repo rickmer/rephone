@@ -49,6 +49,7 @@ class CampaignForm(Form):
     description = StringField(label='Description')
     id_audience = IntegerField(label='Audience', validators=[DataRequired()])
     target_minutes = IntegerField(label='Campaigns Target Minutes', validators=[DataRequired()])
+    campaign_text = StringField(label='Mission Text')
 
     def __init__(self, *args, **kwargs):
         super(CampaignForm, self).__init__(*args, **kwargs)

@@ -1,10 +1,12 @@
 {% extends "index.html" %}
 {% block content %}
 {% from "security/_macros.html" import render_field_with_errors %}
+{% from "frontend/_macros.html" import render_textarea_with_errors %}
 <div class="row">
     <div class="well well-lg">
         <h4>Edit Campaign</h4><hr>
         <form id="campaign_edit_form" action="/campaign/edit/{{ form.id.data }}" method="POST">
+            {{ form.hidden_tag() }}
             {{ render_field_with_errors(form.id, readonly=yes) }}
             {{ render_field_with_errors(form.name) }}
             {{ render_field_with_errors(form.description) }}
@@ -19,6 +21,7 @@
                     {% endfor %}
                 </select>
             </div>
+            {{ render_textarea_with_errors(form.campaign_text) }}
 
         </form>
         <button class="btn btn-info" onclick="window.location.href='/campaigns';">

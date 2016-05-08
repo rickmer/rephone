@@ -1,7 +1,9 @@
-from flask import render_template, abort, flash, redirect, url_for
+from flask import render_template, abort, flash, redirect
 from flask.ext.login import current_user
 from app.models import Campaign, Audience, db
 from app.forms import CampaignForm
+from markdown import markdown
+from lxml.html.clean import clean_html
 
 
 def overview():
@@ -11,9 +13,8 @@ def overview():
     """
     campaigns = Campaign().query.filter_by(id_owner=current_user.id).all()
     for campaign in campaigns:
-        audience = Audience().query.filter_by(id=campaign.id_audience).first()
-        campaign.id_audience = audience
-    return render_template('frontend/campaign_overview.html', campaigns=campaigns)
+        audiences = Audience().query.filter_by(id=campaign.id_audience).all()
+    return render_template('frontend/campaign_overview.html', campaigns=campaigns, audiences=audiences)
 
 
 def edit(id_campaign, request):
@@ -34,14 +35,16 @@ def edit(id_campaign, request):
         form.name.data = campaign.name
         form.target_minutes.data = campaign.target_minutes
         form.id_audience.data = campaign.id_audience
+        form.campaign_text.data = campaign.campaign_text
         return render_template('frontend/campaign_edit.html', form=form, audiences=audiences)
     elif request.method == 'POST':
-        print(form.validate_on_submit())
         if form.validate_on_submit():
             campaign.id_audience = form.id_audience.data
             campaign.name = form.name.data
             campaign.description = form.description.data
             campaign.target_minutes = form.target_minutes.data
+            campaign.campaign_text = form.campaign_text.data
+            campaign.campaign_text_html = clean_html(markdown(form.campaign_text.data))
             db.session.commit()
             flash('Saved!', category='success')
             return render_template('frontend/campaign_edit.html', form=form, audiences=audiences)

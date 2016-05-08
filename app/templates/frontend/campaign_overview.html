@@ -24,7 +24,13 @@
                 <tr>
                     <td><a href="/{{ campaign.id }}">{{ campaign.id }}</a></td>
                     <td>{{ campaign.name }}</td>
-                    <td>{{ campaign.id_audience.name }}</td>
+                    <td>
+                        {% for audience in audiences %}
+                            {% if audience.id == campaign.id_audience %}
+                                {{ audience.name }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
                     <td>{{ campaign.target_minutes }}</td>
                     <td>{{ campaign.minutes_talked }}</td>
                     <td><a href="/campaign/edit/{{ campaign.id }}"><span class="glyphicon glyphicon-edit"></span></a></td>

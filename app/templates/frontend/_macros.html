@@ -1,0 +1,18 @@
+{% macro render_textarea_with_errors(field) %}
+<p>
+
+    <div class="form-group {% if field.errors %} has-error {% endif %}">
+        {{ field.label }}
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Message here ..." name="{{ field.name }}" id="{{ field.name }}">{{ field.data }}</textarea>
+        </div>
+        {% if field.errors %}
+            <ul>
+                {% for error in field.errors %}
+                    <li style="list-style-type: none;">{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    </div>
+</p>
+{% endmacro %}

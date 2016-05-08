@@ -49,6 +49,8 @@ class Campaign(db.Model):
     target_minutes = db.Column(db.Integer())
     minutes_talked = db.Column(db.Integer())
     id_owner = db.Column(db.Integer())
+    campaign_text = db.Column(db.String(2048))
+    campaign_text_html = db.Column(db.String(8192))
 
 
 class Audience(db.Model):

@@ -9,6 +9,7 @@
             {{ render_field_with_errors(form.name) }}
             {{ render_field_with_errors(form.description) }}
             {{ render_field_with_errors(form.target_minutes) }}
+            {{ render_field_with_errors(form.campaign_text) }}
             <div class="form-group">
                 <label>{{ form.id_audience.label }}</label>
                 <select class="form-control" name="{{ form.id_audience.name }}">
