@@ -1,1 +1,1 @@
-apt-get install python-virtualenv python3 python3-dev libfreetype6-dev sqlite3 varnish
+apt-get install python-virtualenv python3 python3-dev libfreetype6-dev sqlite3
