@@ -3,7 +3,9 @@
         {% from "callform/_macros.html" import render_captcha, render_info_bulletin, render_info_bulletin_xs, render_phone_input_group, render_call_time %}
         <div class="row">
             <form id="CallForm" class="form" method="POST" role="form" action="/{{ campaign.id }}">
-                {{ form.hidden_tag() }}
+                <div class="well well-lg">
+                    {{ campaign.campaign_text_html | safe }}
+                </div>
                 <div class="well well-lg">
                     {{ render_call_time(campaign.minutes_talked, campaign.target_minutes) }}
                     <div class="media-object">
@@ -24,6 +26,7 @@
                         </div>
                     </div>
                 </div>
+                {{ form.hidden_tag() }}
             </form>
         </div>
     {% endblock %}
