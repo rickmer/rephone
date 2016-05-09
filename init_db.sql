@@ -8,10 +8,12 @@ CREATE TABLE campaign (
 	target_minutes INTEGER,
 	minutes_talked INTEGER,
 	id_owner INTEGER,
+  campaign_text VARCHAR(2048),
+  campaign_text_html VARCHAR(8192),
 	PRIMARY KEY (id)
 );
-INSERT INTO "campaign" VALUES(1,'Stop TTIP','',1, 300, 0, 1);
-INSERT INTO "campaign" VALUES(2,'Stop TTIP','',2, 300, 0, 1);
+INSERT INTO "campaign" VALUES(1,'Stop TTIP','',1, 300, 0, 1,'', '');
+INSERT INTO "campaign" VALUES(2,'Stop TTIP','',2, 300, 0, 1,'', '');
 
 CREATE TABLE respondent (
 	id INTEGER NOT NULL, 
