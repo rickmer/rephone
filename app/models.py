@@ -34,8 +34,6 @@ class Respondent(db.Model):
     party = db.Column(db.String(128))
     license = db.Column(db.String(128))
     image = db.Column(db.String(64))
-    voting = db.Column(db.String(16))
-    confluence = db.Column(db.String(16))
 
 
 class Campaign(db.Model):
