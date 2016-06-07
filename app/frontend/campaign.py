@@ -44,7 +44,10 @@ def edit(id_campaign, request):
             campaign.description = form.description.data
             campaign.target_minutes = form.target_minutes.data
             campaign.campaign_text = form.campaign_text.data
-            campaign.campaign_text_html = clean_html(markdown(form.campaign_text.data))
+            if form.campaign_text.data:
+                campaign.campaign_text_html = clean_html(markdown(form.campaign_text.data))
+            else:
+                campaign.campaign_text_html = ''
             db.session.commit()
             flash('Saved!', category='success')
             return render_template('frontend/campaign_edit.html', form=form, audiences=audiences)
