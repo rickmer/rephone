@@ -35,9 +35,12 @@ class TestViews(RephoneTest):
     def test_bias_alteration_audience_2(self):
         index_0_before = self.app.random[2][0]
         index_1_before = self.app.random[2][1]
-        self.app.random.add_sample(audience_id=2, respondent_id=752)
+        self.app.random.add_sample(audience_id=2, respondent_id=751)
         index_0_after = self.app.random[2][0]
         index_1_after = self.app.random[2][1]
+
+        print(index_0_before, index_0_after)
+        print(index_1_before, index_1_after)
 
         assert index_0_before == index_0_after
         assert index_1_before == index_1_after - 1
