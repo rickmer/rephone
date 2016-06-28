@@ -1,6 +1,6 @@
 from flask import current_app
-from flask.ext.captcha.models import CaptchaStore
-from flask.ext.wtf import Form
+from flask_captcha.models import CaptchaStore
+from flask_wtf import Form
 from flask_security import ConfirmRegisterForm
 from wtforms import StringField, IntegerField
 from wtforms.validators import DataRequired, Length

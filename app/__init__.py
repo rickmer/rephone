@@ -1,9 +1,9 @@
 from flask import Flask
 from .models import db, user_data_store
 from .forms import RegisterForm
-from flask.ext.captcha import Captcha
-from flask.ext.mail import Mail
-from flask.ext.security import Security
+from flask_captcha import Captcha
+from flask_mail import Mail
+from flask_security import Security
 
 mail = Mail()
 security = Security()
@@ -11,7 +11,7 @@ security = Security()
 
 def create_app(config_override=None, config_file=None):
     from .views import main as main_blueprint
-    from flask.ext.captcha.views import captcha_blueprint
+    from flask_captcha.views import captcha_blueprint
     app = Flask(__name__)
     # parse configuration
     app.config['demo_mode'] = False

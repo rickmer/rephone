@@ -1,6 +1,6 @@
 from app.callwidget.calls import make_outbound_call, get_call_widget, post_call_widget
 from flask import Blueprint, request, Response, redirect, abort
-from flask.ext.login import login_required
+from flask_login import login_required
 from .abuse.client import is_blocked
 
 main = Blueprint('main', __name__)

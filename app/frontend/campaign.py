@@ -1,5 +1,5 @@
 from flask import render_template, abort, flash, redirect
-from flask.ext.login import current_user
+from flask_login import current_user
 from app.models import Campaign, Audience, db
 from app.forms import CampaignForm
 from markdown import markdown

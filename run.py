@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from app import create_app
 from argparse import ArgumentParser
-from flask.ext.captcha.helpers import init_captcha_dir, generate_images
+from flask_captcha.helpers import init_captcha_dir, generate_images
 from app.abuse.client import block_ip
 from app.abuse.calls import abuse_detected
 from os.path import isfile

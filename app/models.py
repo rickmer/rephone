@@ -1,5 +1,5 @@
-from flask.ext.sqlalchemy import SQLAlchemy
-from flask.ext.security import UserMixin, RoleMixin, SQLAlchemyUserDatastore
+from flask_sqlalchemy import SQLAlchemy
+from flask_security import UserMixin, RoleMixin, SQLAlchemyUserDatastore
 db = SQLAlchemy()
 
 
