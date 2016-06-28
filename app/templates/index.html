@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-{% from "_macros.html" import render_head, render_impressum_trigger, render_impressum_modal %}
+{% from "_macros.html" import render_head, render_impressum_trigger, render_impressum_modal, render_privacy_trigger, render_privacy_modal %}
 <head>
     {{ render_head(captcha_activated, social_activated) }}
 </head>
@@ -68,7 +68,7 @@
                     <div class="collapse navbar-collapse navbar-right" id="footer">
                         <ul class="nav navbar-nav">
                             <li>
-                                <a href="#">Datenschutzerklärung</a>
+                                {{ render_privacy_trigger() }}
                             </li>
                             <li>
                                 {{ render_impressum_trigger() }}
@@ -80,5 +80,6 @@
         </div>
     </div>
     {{ render_impressum_modal(impressum) }}
+    {{ render_privacy_modal() }}
 </body>
 </html>

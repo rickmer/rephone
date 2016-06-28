@@ -55,3 +55,74 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro render_privacy_trigger() %}
+<a href="#" data-toggle="modal" data-target="#PrivacyModal">Datenschutzerklärung</a>
+{% endmacro %}
+
+{% macro render_privacy_modal(impressum) %}
+<div class="modal fade" id="PrivacyModal" tabindex="-1" role="dialog" aria-labelledby="PrivacyModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="PrivacyModalLabel">Datenschutzerklärung</h4>
+      </div>
+      <div class="modal-body">
+        <p>Vielen Dank für Ihren Besuch auf unserer Webseite von CallForDemocracy. Im Folgenden möchten  wir Sie
+           darüber in Kenntnis setzen, welche Daten durch diese Webseite erhoben und vorübergehend gespeichert werden.
+           Im Allgemeinen streben wir eine minimale Datenerhebung nach den Grundsätzen von “privacy by design” an.
+        </p>
+
+        <h5> 1. Erhebung und Verarbeitung von personenbezogenen Daten </h5>
+
+        <p>
+          Aus Gründen der technischen Notwendigkeit wird Ihre IP-Adresse während des Zugriffs auf unsere Webseite
+          erfasst. Diese wird von uns zur Erkennung von missbräuchlicher Nutzung unseres Angebots vorübergehend
+          gespeichert. Die Speicherung erfolgt in Form eines kryptographischen Hashes.
+        </p>
+
+        <p>
+          Falls Sie einen Anruf über unsere Webseite tätigen, so wird ferner auch Ihre Telefonnummer erfasst. Diese
+          Speichern wir ebenfalls zur Missbrauchserkennung in Form eines kryptographischen Hashes.
+        </p>
+
+        <h5> 2. Nutzung, Weitergabe und Löschung personenbezogener Datenerhebung </h5>
+
+        <p> Die Nutzung der Daten erfolgt nur zur Erkennung von missbräuchlicher Nutzung unseres Angebots.</p>
+        <p>
+          Eine Weitergabe der Telefonnummer erfolgt zur Durchführung des Telefonats an das Unternehmen Twilio Ireland
+          Limited, 25-28 North Wall Quay, Dublin 1, Ireland. Diese Übermittlung ist für uns technisch notwendig und
+          mit der Nutzung unseres Telefonieangebots erklären Sie sich somit mit der Datenschutzerklärung der Twilio
+          Ireland Limited einverstanden(<a href="www.twilio.com/legal/privacy">www.twilio.com/legal/privacy</a>).
+        </p>
+        <p>
+          Die Löschung der Daten erfolgt spätestens nach Beendigung der jeweiligen Telefonkampagne.
+        </p>
+
+        <h5> 3. Auskunftsrecht </h5>
+        <p> Auf schriftliche Anfrage werden wir Sie gerne über die zu Ihrer Person gespeicherten Daten informieren.</p>
+
+        <h5> 4. Sicherheitshinweis </h5>
+        <p>
+          Damit die Ihre Daten während der Übermittlung vor Dritten geschützt sind, verwenden wir eine
+          Transportverschlüsselung auf Basis von TLS.
+        </p>
+
+        <h5>5. Verwendung von Cookies</h5>
+        <p> Für die Login-Funktion unserer Webseite sind Session-Cookies notwendig. Mithilfe der Cookies können wir
+          Ihren Browser im Login-Bereich der Webseite authentifizieren. Nach dem Ende der Browser-Sitzung werden die
+          von uns verwendeten Cookies wieder gelöscht.
+        </p>
+
+        <h5>6. Verwendung von Social-Media-Buttons</h5>
+        <p> Wir ermöglichen Ihnen die Inhalte unserer Seite bequem über Ihren Twitter- oder Facebook-Account zu teilen.
+          Erst nach einem Klick auf die entsprechenden Social-Media-Buttons werden Informationen an Facebook
+          beziehungsweise Twitter übersandt. Sie erklären sich durch Nutzung der jeweiligen Buttons mit den
+          Datenschutzrichtlinien von Facebook beziehungsweise Twitter einverstanden.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
