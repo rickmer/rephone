@@ -7,39 +7,11 @@ import errno
 import lockfile
 
 from daemon import pidfile
-from daemon.daemon import (basestring, unicode)
+from daemon.daemon import basestring
 from daemon.daemon import DaemonContext
-from daemon.daemon import _chain_exception_from_existing_exception_context
+from daemon.runner import DaemonRunnerInvalidActionError, DaemonRunnerStartFailureError, DaemonRunnerStopFailureError
 
 
-class DaemonRunnerError(Exception):
-    """ Abstract base class for errors from DaemonRunner. """
-
-    def __init__(self, *args, **kwargs):
-        self._chain_from_context()
-
-        super(DaemonRunnerError, self).__init__(*args, **kwargs)
-
-    def _chain_from_context(self):
-        _chain_exception_from_existing_exception_context(self, as_cause=True)
-
-
-class DaemonRunnerInvalidActionError(DaemonRunnerError, ValueError):
-    """ Raised when specified action for DaemonRunner is invalid. """
-
-    def _chain_from_context(self):
-        # This exception is normally not caused by another.
-        _chain_exception_from_existing_exception_context(self, as_cause=False)
-
-
-class DaemonRunnerStartFailureError(DaemonRunnerError, RuntimeError):
-    """ Raised when failure starting DaemonRunner. """
-
-
-class DaemonRunnerStopFailureError(DaemonRunnerError, RuntimeError):
-    """ Raised when failure stopping DaemonRunner. """
-
-
 class DaemonRunner:
     """ Controller for a callable running in a separate background process.
 
@@ -106,9 +78,7 @@ class DaemonRunner:
         try:
             self.daemon_context.open()
         except lockfile.AlreadyLocked:
-            error = DaemonRunnerStartFailureError(
-                    "PID file {pidfile.path!r} already locked".format(
-                        pidfile=self.pidfile))
+            error = DaemonRunnerStartFailureError("PID file {pidfile.path!r} already locked".format(pidfile=self.pidfile))
             raise error
 
         pid = os.getpid()
@@ -129,9 +99,7 @@ class DaemonRunner:
         try:
             os.kill(pid, signal.SIGTERM)
         except OSError as exc:
-            error = DaemonRunnerStopFailureError(
-                    "Failed to terminate {pid:d}: {exc}".format(
-                        pid=pid, exc=exc))
+            error = DaemonRunnerStopFailureError("Failed to terminate {pid:d}: {exc}".format(pid=pid, exc=exc))
             raise error
 
     def _stop(self):
@@ -159,11 +127,9 @@ class DaemonRunner:
         self._stop()
         self._start()
 
-    action_funcs = {
-            'start': _start,
-            'stop': _stop,
-            'restart': _restart,
-            }
+    action_funcs = {'start': _start,
+                    'stop': _stop,
+                    'restart': _restart}
 
     def _get_action_func(self):
         """ Get the function for the specified action.
@@ -180,9 +146,7 @@ class DaemonRunner:
         try:
             func = self.action_funcs[self.action]
         except KeyError:
-            error = DaemonRunnerInvalidActionError(
-                    "Unknown action: {action!r}".format(
-                        action=self.action))
+            error = DaemonRunnerInvalidActionError("Unknown action: {action!r}".format(action=self.action))
             raise error
         return func
 
