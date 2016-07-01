@@ -50,13 +50,17 @@ class DaemonRunner:
               started.
 
             """
-        self.action = app.cmd.command
         self.app = app
+        if 'start' in app.cmd:
+            self.action = 'start'
+        elif 'stop' in app.cmd:
+            self.action = 'stop'
+        elif 'restart' in app.cmd:
+            self.action = 'restart'
         self.daemon_context = DaemonContext()
         self.daemon_context.stdin = open(app.stdin_path, 'rt')
         self.daemon_context.stdout = open(app.stdout_path, 'wb+', buffering=0)
-        self.daemon_context.stderr = open(
-                app.stderr_path, 'wb+', buffering=0)
+        self.daemon_context.stderr = open(app.stderr_path, 'wb+', buffering=0)
 
         self.pidfile = None
         if app.pidfile_path is not None:
