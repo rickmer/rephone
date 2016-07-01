@@ -35,16 +35,17 @@ Use your favorite browser: http://localhost:5001
 ```
 usage: rephone [-h] [--demo] [--host HOST] [--port PORT] [--single_threaded]
                [--config_file CONFIG_FILE]
-               {interactive,start,stop,restart,block,captcha_gen} ...
+               {start,stop,restart,status,interactive,block,captcha_gen} ...
 
 rephone - a free telephone call/callback system.
 
 positional arguments:
-  {interactive,start,stop,restart,block,captcha_gen}
-    interactive         run in interactive mode
+  {start,stop,restart,status,interactive,block,captcha_gen}
     start               start rephone daemon
     stop                stop rephone daemon
     restart             restart rephone daemon
+    status              prints rephone daemon status
+    interactive         run in interactive mode
     block               block a phone number or ip address
     captcha_gen         pregen captchas
 

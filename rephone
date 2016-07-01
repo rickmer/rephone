@@ -45,15 +45,17 @@ if __name__ == '__main__':
     argparser.add_argument('--single_threaded', action='store_false', help='disable multi-threading')
     argparser.add_argument('--config_file', type=str, help="Configuration file")
     subparsers = argparser.add_subparsers()
-    interactive = subparsers.add_parser('interactive', help='run in interactive mode')
-    interactive.add_argument('interactive', action='store_true', default=True)
-    interactive.add_argument('--debug', action='store_true', help="Run with Interactive Debugger")
     start = subparsers.add_parser('start', help='start rephone daemon')
     start.add_argument('start', action='store_true', default=True, help='start the rephone daemon')
     stop = subparsers.add_parser('stop', help='stop rephone daemon')
     stop.add_argument('stop', action='store_true', default=True, help='stop the rephone daemon')
     restart = subparsers.add_parser('restart', help='restart rephone daemon')
     restart.add_argument('restart', action='store_true', default=True, help='restart rephone daemon')
+    status = subparsers.add_parser('status', help='prints rephone daemon status')
+    status.add_argument('status', action='store_true', default=True, help='prints rephone daemon status')
+    interactive = subparsers.add_parser('interactive', help='run in interactive mode')
+    interactive.add_argument('interactive', action='store_true', default=True)
+    interactive.add_argument('--debug', action='store_true', help="Run with Interactive Debugger")
     block = subparsers.add_parser('block', help='block a phone number or ip address')
     block.add_argument('ip_or_phone', choices=['ip', 'phone'], help='persistently block specific client_ip from \
                                                                      dispatch calls or persistently block specific \
@@ -63,7 +65,7 @@ if __name__ == '__main__':
     captcha_gen.add_argument('captcha_gen', action='store_true', default=True, help='pregen captchas')
     cmd = argparser.parse_args()
 
-    if 'start' in cmd or 'stop' in cmd or 'restart' in cmd:
+    if 'start' in cmd or 'stop' in cmd or 'restart' in cmd or 'status' in cmd:
         logger = logging.getLogger("RePhoneLog")
         logger.setLevel(logging.INFO)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")

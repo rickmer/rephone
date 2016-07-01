@@ -57,6 +57,8 @@ class DaemonRunner:
             self.action = 'stop'
         elif 'restart' in app.cmd:
             self.action = 'restart'
+        elif 'status' in app.cmd:
+            self.action = 'status'
         self.daemon_context = DaemonContext()
         self.daemon_context.stdin = open(app.stdin_path, 'rt')
         self.daemon_context.stdout = open(app.stdout_path, 'wb+', buffering=0)
@@ -106,6 +108,18 @@ class DaemonRunner:
             error = DaemonRunnerStopFailureError("Failed to terminate {pid:d}: {exc}".format(pid=pid, exc=exc))
             raise error
 
+    def _status(self):
+        """ Print the daemon process status to stdout.
+
+            :return: ``None``.
+
+        """
+        if is_pidfile_stale(self.pidfile):
+            emit_message('rephone not runnig, but PID File is stale.')
+
+        if self.pidfile.is_locked():
+            emit_message('rephone is running PID {pid:d}'.format(pid=self.pidfile.read_pid()))
+
     def _stop(self):
         """ Exit the daemon process specified in the current PID file.
 
@@ -133,7 +147,8 @@ class DaemonRunner:
 
     action_funcs = {'start': _start,
                     'stop': _stop,
-                    'restart': _restart}
+                    'restart': _restart,
+                    'status': _status}
 
     def _get_action_func(self):
         """ Get the function for the specified action.
