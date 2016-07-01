@@ -27,26 +27,33 @@ make install
 # activate virtual environment
 source bin/activate
 
-./run.py
+./rephone start
 ```
-Test web server on your favorite browser: http://localhost:5001
+Use your favorite browser: http://localhost:5001
 
 ## usage
 ```
-usage: run.py [-h] [--debug] [--demo] [--host HOST] [--port PORT]
-              [--single_threaded] [--generate_captcha]
-              [--config_file CONFIG_FILE]
+usage: rephone [-h] [--demo] [--host HOST] [--port PORT] [--single_threaded]
+               [--config_file CONFIG_FILE]
+               {interactive,start,stop,restart,block,captcha_gen} ...
 
 rephone - a free telephone call/callback system.
 
+positional arguments:
+  {interactive,start,stop,restart,block,captcha_gen}
+    interactive         run in interactive mode
+    start               start rephone daemon
+    stop                stop rephone daemon
+    restart             restart rephone daemon
+    block               block a phone number or ip address
+    captcha_gen         pregen captchas
+
 optional arguments:
   -h, --help            show this help message and exit
-  --debug               Run with Interactive Debugger
   --demo                Demo Mode; Doesn't make outbound calls.
   --host HOST           Address to listen to
   --port PORT           tcp port to listen to
   --single_threaded     disable multi-threading
-  --generate_captcha    (re)generates captcha images
   --config_file CONFIG_FILE
                         Configuration file
 ```
