@@ -39,7 +39,6 @@ class DaemonizedApp(object):
 if __name__ == '__main__':
     # handling command line arguments
     argparser = ArgumentParser(description='rephone - a free telephone call/callback system.')
-    # argparser.add_argument('--debug', action='store_true', help="Run with Interactive Debugger")
     argparser.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
     argparser.add_argument('--host', default='localhost', help="Address to listen to")
     argparser.add_argument('--port', type=int, default='5001', help='tcp port to listen to')
