@@ -116,9 +116,10 @@ class DaemonRunner:
         """
         if is_pidfile_stale(self.pidfile):
             emit_message('rephone not runnig, but PID File is stale.')
-
-        if self.pidfile.is_locked():
+        elif self.pidfile.is_locked():
             emit_message('rephone is running PID {pid:d}'.format(pid=self.pidfile.read_pid()))
+        else:
+            emit_message('rephone is not running')
 
     def _stop(self):
         """ Exit the daemon process specified in the current PID file.
@@ -129,10 +130,8 @@ class DaemonRunner:
 
             """
         if not self.pidfile.is_locked():
-            error = DaemonRunnerStopFailureError(
-                    "PID file {pidfile.path!r} not locked".format(
-                        pidfile=self.pidfile))
-            raise error
+            emit_message('no PID file found')
+            exit(0)
 
         if is_pidfile_stale(self.pidfile):
             self.pidfile.break_lock()
