@@ -33,8 +33,7 @@ Use your favorite browser: http://localhost:5001
 
 ## usage
 ```
-usage: rephone [-h] [--demo] [--host HOST] [--port PORT] [--single_threaded]
-               [--config_file CONFIG_FILE]
+usage: rephone [-h]
                {start,stop,restart,status,interactive,block,captcha_gen} ...
 
 rephone - a free telephone call/callback system.
@@ -51,10 +50,22 @@ positional arguments:
 
 optional arguments:
   -h, --help            show this help message and exit
-  --demo                Demo Mode; Doesn't make outbound calls.
+```
+
+```  
+usage: rephone start [-h] [--host HOST] [--port PORT] [--single_threaded]
+                     [--logfile LOGFILE] [--demo] [--config_file CONFIG_FILE]
+
+positional arguments:
+  start                 start the rephone daemon
+
+optional arguments:
+  -h, --help            show this help message and exit
   --host HOST           Address to listen to
   --port PORT           tcp port to listen to
   --single_threaded     disable multi-threading
+  --logfile LOGFILE     logfile to use
+  --demo                Demo Mode; Doesn't make outbound calls.
   --config_file CONFIG_FILE
                         Configuration file
 ```

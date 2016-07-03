@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 from app import create_app
-from argparse import ArgumentParser
 from app.daemon import runner
 from os.path import isfile
 import logging
@@ -36,40 +35,70 @@ class DaemonizedApp(object):
                      threaded=self.cmd.single_threaded)
 
 
-if __name__ == '__main__':
-    # handling command line arguments
+def parse_command_line_arguments():
+    from argparse import ArgumentParser
     argparser = ArgumentParser(description='rephone - a free telephone call/callback system.')
-    argparser.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
-    argparser.add_argument('--host', default='localhost', help="Address to listen to")
-    argparser.add_argument('--port', type=int, default='5001', help='tcp port to listen to')
-    argparser.add_argument('--single_threaded', action='store_false', help='disable multi-threading')
-    argparser.add_argument('--config_file', type=str, help="Configuration file")
     subparsers = argparser.add_subparsers()
+
     start = subparsers.add_parser('start', help='start rephone daemon')
     start.add_argument('start', action='store_true', default=True, help='start the rephone daemon')
+    start.add_argument('--host', default='localhost', help="Address to listen to")
+    start.add_argument('--port', type=int, default='5001', help='tcp port to listen to')
+    start.add_argument('--single_threaded', action='store_false', help='disable multi-threading')
+    start.add_argument('--logfile', type=str, default='daemon.log', help='logfile to use')
+    start.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
+    start.add_argument('--config_file', type=str, help="Configuration file")
+
     stop = subparsers.add_parser('stop', help='stop rephone daemon')
     stop.add_argument('stop', action='store_true', default=True, help='stop the rephone daemon')
+    stop.add_argument('--logfile', type=str, default='daemon.log', help='logfile to use')
+    stop.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
+    stop.add_argument('--config_file', type=str, help="Configuration file")
+
     restart = subparsers.add_parser('restart', help='restart rephone daemon')
     restart.add_argument('restart', action='store_true', default=True, help='restart rephone daemon')
+    restart.add_argument('--logfile', type=str, default='daemon.log', help='logfile to use')
+    restart.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
+    restart.add_argument('--config_file', type=str, help="Configuration file")
+    restart.add_argument('--host', default='localhost', help="Address to listen to")
+    restart.add_argument('--port', type=int, default='5001', help='tcp port to listen to')
+    restart.add_argument('--single_threaded', action='store_false', help='disable multi-threading')
+
     status = subparsers.add_parser('status', help='prints rephone daemon status')
     status.add_argument('status', action='store_true', default=True, help='prints rephone daemon status')
+    status.add_argument('--logfile', type=str, default='daemon.log', help='logfile to use')
+    status.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
+    status.add_argument('--config_file', type=str, help="Configuration file")
+
     interactive = subparsers.add_parser('interactive', help='run in interactive mode')
     interactive.add_argument('interactive', action='store_true', default=True)
     interactive.add_argument('--debug', action='store_true', help="Run with Interactive Debugger")
+    interactive.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
+    interactive.add_argument('--config_file', type=str, help="Configuration file")
+    interactive.add_argument('--host', default='localhost', help="Address to listen to")
+    interactive.add_argument('--port', type=int, default='5001', help='tcp port to listen to')
+    interactive.add_argument('--single_threaded', action='store_false', help='disable multi-threading')
+
     block = subparsers.add_parser('block', help='block a phone number or ip address')
     block.add_argument('ip_or_phone', choices=['ip', 'phone'], help='persistently block specific client_ip from \
                                                                      dispatch calls or persistently block specific \
                                                                      phone number (ITU-T E.164) from being called')
     block.add_argument('value_to_block', type=str, help='ip address or phonenumber (ITU-T E.164)')
+
     captcha_gen = subparsers.add_parser('captcha_gen', help='pregen captchas')
     captcha_gen.add_argument('captcha_gen', action='store_true', default=True, help='pregen captchas')
-    cmd = argparser.parse_args()
+
+    return argparser.parse_args(), argparser.print_usage
+
+
+if __name__ == '__main__':
+    cmd, print_usage = parse_command_line_arguments()
 
     if 'start' in cmd or 'stop' in cmd or 'restart' in cmd or 'status' in cmd:
         logger = logging.getLogger("RePhoneLog")
         logger.setLevel(logging.INFO)
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-        handler = logging.FileHandler("testdaemon.log")
+        handler = logging.FileHandler(cmd.logfile)
         handler.setFormatter(formatter)
         logger.addHandler(handler)
         daemon_runner = runner.DaemonRunner(DaemonizedApp(cmd=cmd))
@@ -79,7 +108,7 @@ if __name__ == '__main__':
         from app.abuse.client import block_ip
         from app.abuse.calls import abuse_detected
         # handling config file
-        if cmd.config_file:
+        if 'config_file' in cmd:
             if not isfile(cmd.config_file):
                 exit('config file not found')
             else:
@@ -105,14 +134,5 @@ if __name__ == '__main__':
                 host=cmd.host,
                 debug=cmd.debug,
                 threaded=cmd.single_threaded)
-
-
-
-
-
-
-
-
-
-
-
+    else:
+        print_usage()
