@@ -80,13 +80,22 @@ def parse_command_line_arguments():
     interactive.add_argument('--single_threaded', action='store_false', help='disable multi-threading')
 
     block = subparsers.add_parser('block', help='block a phone number or ip address')
+    block.add_argument('block', action='store_true', default=True, help='persistently block specific client_ip from \
+                                                                         dispatch calls')
+
     block.add_argument('ip_or_phone', choices=['ip', 'phone'], help='persistently block specific client_ip from \
                                                                      dispatch calls or persistently block specific \
                                                                      phone number (ITU-T E.164) from being called')
     block.add_argument('value_to_block', type=str, help='ip address or phonenumber (ITU-T E.164)')
+    block.add_argument('--logfile', type=str, default='daemon.log', help='logfile to use')
+    block.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
+    block.add_argument('--config_file', type=str, help="Configuration file")
 
     captcha_gen = subparsers.add_parser('captcha_gen', help='pregen captchas')
     captcha_gen.add_argument('captcha_gen', action='store_true', default=True, help='pregen captchas')
+    captcha_gen.add_argument('--logfile', type=str, default='daemon.log', help='logfile to use')
+    captcha_gen.add_argument('--demo', action='store_true', help="Demo Mode; Doesn't make outbound calls.")
+    captcha_gen.add_argument('--config_file', type=str, help="Configuration file")
 
     return argparser.parse_args(), argparser.print_usage
 
@@ -108,7 +117,7 @@ if __name__ == '__main__':
         from app.abuse.client import block_ip
         from app.abuse.calls import abuse_detected
         # handling config file
-        if 'config_file' in cmd:
+        if 'config_file' in cmd and cmd.config_file:
             if not isfile(cmd.config_file):
                 exit('config file not found')
             else:
@@ -116,7 +125,7 @@ if __name__ == '__main__':
         else:
             app = create_app(config_override=dict(demo_mode=cmd.demo))
 
-        if 'captcha_gen' in cmd and captcha_gen:
+        if 'captcha_gen' in cmd and cmd.captcha_gen:
             with app.app_context():
                 init_captcha_dir()
                 generate_images(app.config['CAPTCHA_PREGEN_MAX'])
