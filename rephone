@@ -104,12 +104,12 @@ if __name__ == '__main__':
     cmd, print_usage = parse_command_line_arguments()
 
     if 'start' in cmd or 'stop' in cmd or 'restart' in cmd or 'status' in cmd:
-        logger = logging.getLogger("RePhoneLog")
-        logger.setLevel(logging.INFO)
-        formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-        handler = logging.FileHandler(cmd.logfile)
-        handler.setFormatter(formatter)
-        logger.addHandler(handler)
+        # logger = logging.getLogger("RePhoneLog")
+        # logger.setLevel(logging.INFO)
+        # formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+        # handler = logging.FileHandler(cmd.logfile)
+        # handler.setFormatter(formatter)
+        # logger.addHandler(handler)
         daemon_runner = runner.DaemonRunner(DaemonizedApp(cmd=cmd))
         daemon_runner.do_action()
     elif 'interactive' in cmd or 'captcha_gen' in cmd or 'block' in cmd:
