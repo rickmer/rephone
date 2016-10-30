@@ -1,6 +1,6 @@
 Flask==0.11.1
 git+git://github.com/rickmer/flask-captcha.git
-Flask-Login==0.4.0
+Flask-Login==0.3.2
 Flask-Mail==0.9.1
 Flask-Principal==0.4.0
 Flask-SQLAlchemy==2.1
